@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "github.vscode-pull-request-github",
+    "castwide.solargraph",
+    "esbenp.prettier-vscode",
+    "rebornix.ruby",
+    "misogi.ruby-rubocop",
+    "bradlc.vscode-tailwindcss",
+    "gamunu.vscode-yarn",
+    "wingrunr21.vscode-ruby",
+    "davidanson.vscode-markdownlint",
+    "streetsidesoftware.code-spell-checker",
+    "ms-azuretools.vscode-docker"
+  ]
+}

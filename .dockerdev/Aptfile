@@ -1,0 +1,3 @@
+# Declare anything needed for apt-get specific to this app
+
+vim

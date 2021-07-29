@@ -1,0 +1,126 @@
+version: '3.9'
+
+x-app: &app
+  build:
+    context: .
+    # Dockerfile has a multi-state build, so we need to set the target to development
+    target: development
+    # dockerfile: Dockerfile
+    # Change these to test a newwer version and then update in Dockerfile
+    # which has these as defaults
+    # args:
+      # RUBY_VERSION: '3.0.2'
+      # POSTGRES_MAJOR_VERSION: '13'
+      # NODEJS_MAJOR_VERSION: '16'
+      # YARN_VERSION: '1.22.11'
+      # BUNDLER_VERSION: '2.2.24'
+  environment: &env
+    NODE_ENV: ${NODE_ENV:-development}
+    RAILS_ENV: ${RAILS_ENV:-development}
+    YARN_CACHE_FOLDER: /app/node_modules/.yarn-cache
+  image: app:0.1.0
+  tmpfs:
+    - /tmp
+
+x-backend: &backend
+  <<: *app
+  stdin_open: true
+  tty: true
+  volumes:
+    - .:/app
+    - rails_cache:/app/tmp/cache
+    - bundle:/usr/local/bundle
+    - node_modules:/app/node_modules
+    - packs:/app/public/packs
+    - .dockerdev/.psqlrc:/root/.psqlrc
+    - .dockerdev/.bashrc:/root/.bashrc
+  environment:
+    <<: *env
+    REDIS_URL_BASE: redis://redis:6379
+    POSTGRES_HOST: postgres
+    POSTGRES_SCHEMA_SEARCH_PATH: public
+    WEBPACKER_DEV_SERVER_HOST: webpacker
+    # DATABASE_URL: postgres://postgres:postgres@postgres:5432
+    BOOTSNAP_CACHE_DIR: /usr/local/bundle/_bootsnap
+    WEB_CONCURRENCY: 1
+    HISTFILE: /app/log/.bash_history
+    PSQL_HISTFILE: /app/log/.psql_history
+    EDITOR: vi
+  depends_on:
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+services:
+  bash:
+    <<: *backend
+    command: /bin/bash
+    ports:
+      - '3000:3000'
+      - '3002:3002'
+
+  rails:
+    <<: *backend
+    command: bundle exec rails server -b 0.0.0.0
+    ports:
+      - '3000:3000'
+
+  sidekiq:
+    <<: *backend
+    command: bundle exec sidekiq -C config/sidekiq.yml
+
+  webpacker:
+    <<: *app
+    # command: ./bin/webpack-dev-server
+    # yarn serve makes sure everything is up to date and restarts the server
+    # before starting the webpack-dev-server
+    # bundle install; yarn install; touch tmp/restart.txt; yarn webpack-dev-server
+    command: yarn serve
+    ports:
+      - '3035:3035'
+    volumes:
+      - .:/app
+      - bundle:/usr/local/bundle
+      - node_modules:/app/node_modules
+      - packs:/app/public/packs
+    environment:
+      <<: *env
+      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
+
+  postgres:
+    # image: postgres:13.3
+    # Postgres with PostgGIS extension
+    image: postgis/postgis:13-3.0-alpine
+    volumes:
+      - .dockerdev/.psqlrc:/root/.psqlrc
+      - postgres:/var/lib/postgresql/data
+      - ./log:/root/log
+    environment:
+      PSQL_HISTFILE: /root/log/.psql_history
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432
+    healthcheck:
+      test: pg_isready -U postgres -h 127.0.0.1
+      interval: 5s
+
+  redis:
+    image: redis:6.2.5-alpine
+    volumes:
+      - redis:/data
+    ports:
+      - 6379
+    healthcheck:
+      test: redis-cli ping
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  postgres:
+  redis:
+  bundle:
+  node_modules:
+  rails_cache:
+  packs:

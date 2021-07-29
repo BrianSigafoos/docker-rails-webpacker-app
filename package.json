@@ -1,0 +1,116 @@
+{
+  "name": "docker-demo-app",
+  "private": true,
+  "dependencies": {
+    "@babel/core": "^7.14.8",
+    "@hotwired/turbo-rails": "^7.0.0-rc.1",
+    "@rails/activestorage": "^6.0.0",
+    "@rails/ujs": "^6.1.4",
+    "@rails/webpacker": "^6.0.0-beta.7",
+    "autoprefixer": "^10.3.1",
+    "css-minimizer-webpack-plugin": "^3.0.2",
+    "mini-css-extract-plugin": "^2.1.0",
+    "postcss": "^8.3.6",
+    "postcss-loader": "^6.1.1",
+    "sass": "^1.36.0",
+    "sass-loader": "^12.1.0",
+    "stimulus": "^2.0.0",
+    "tailwindcss": "^2.2.7",
+    "webpack": "^5.11.0",
+    "webpack-cli": "^4.2.0"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.14.7",
+    "@webpack-cli/serve": "^1.5.1",
+    "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.3.0",
+    "lint-staged": "^11.1.1",
+    "pre-commit": "^1.2.2",
+    "prettier": "^2.3.2",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-dev-server": "^3.11.2"
+  },
+    "scripts": {
+    "lint": "yarn css:lint; yarn js:lint; yarn md:lint; yarn json:lint",
+    "fix": "yarn css:fix; yarn js:fix; yarn md:fix; yarn json:fix",
+    "eslint": "eslint",
+    "lint-staged": "$(yarn bin)/lint-staged",
+    "css:fix": "yarn prettier --write 'app/**/*.scss'",
+    "css:lint": "yarn prettier --check 'app/**/*.scss'",
+    "erb:lint": "bundle exec erblint --lint-all",
+    "erb:fix": "bundle exec erblint -a --lint-all",
+    "i18n:add": "i18n-tasks add-missing",
+    "i18n:fix": "i18n-tasks normalize",
+    "i18n:lint": "i18n-tasks health",
+    "md:fix": "yarn prettier --write './**/*.md'",
+    "md:lint": "yarn prettier --check './**/*.md'",
+    "json:fix": "yarn prettier --write '*.json'; yarn prettier --write 'config/**/*.json'",
+    "json:lint": "yarn prettier --check '*.json'; yarn prettier --check 'config/**/*.json'",
+    "js:fix": "yarn prettier --write 'app/packs/**/*.js'; yarn eslint --fix app/packs",
+    "js:lint": "yarn prettier --check 'app/packs/**/*.js'; yarn eslint app/packs",
+    "ruby:fix": "bundle exec rubocop -a",
+    "ruby:lint": "bundle exec rubocop",
+    "prettier": "prettier",
+    "rails": "rm log/development.log; rm log/test.log; bundle exec rails s -p 3000 -b lvh.me",
+    "serve": "bundle install; yarn install; touch tmp/restart.txt; yarn webpack-dev-server",
+    "webpack": "./bin/webpack --watch --progress --color",
+    "webpack:clean": "rm -rf public/packs*",
+    "webpack-dev-server": "./bin/webpack-dev-server",
+    "webpack:debug:test": "yarn webpack:clean; NODE_ENV=test RAILS_ENV=test bundle exec rails webpacker:compile --trace",
+    "webpack:debug:prod": "yarn webpack:clean; NODE_ENV=production RAILS_ENV=production bundle exec rails webpacker:compile --trace; yarn rails",
+    "webpack:debug:prod:precompile": "yarn webpack:clean; NODE_ENV=production RAILS_ENV=production bundle exec rake assets:precompile --trace",
+    "webpack:analyze": "yarn webpack:build_json && yarn webpack:analyze_json",
+    "webpack:build_json": "RAILS_ENV=${RAILS_ENV:-production} NODE_ENV=${NODE_ENV:-production} bin/webpack --profile --json > tmp/webpack-stats.json",
+    "webpack:analyze_json": "webpack-bundle-analyzer tmp/webpack-stats.json public/packs"
+  },
+  "version": "0.1.0",
+ "pre-commit": [
+    "lint-staged"
+  ],
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "esmodules": true
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
+  },
+  "browserslist": [
+    "supports es6-module"
+  ],
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es2021": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "prettier"
+    ],
+    "parser": "@babel/eslint-parser",
+    "rules": {
+      "class-methods-use-this": 2,
+      "no-console": 2
+    },
+    "reportUnusedDisableDirectives": true
+  },
+  "postcss": {
+    "plugins": {
+      "tailwindcss": {},
+      "autoprefixer": {}
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
+  }
+}

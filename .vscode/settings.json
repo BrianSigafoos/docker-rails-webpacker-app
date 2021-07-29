@@ -1,0 +1,4 @@
+{
+  "npm.packageManager": "yarn",
+  "terminal.integrated.shell.osx": "zsh"
+}
