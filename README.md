@@ -8,21 +8,21 @@
   - Make Docker fast enough for development with persisted volumes for all dependencies and generated content (bundle node_modules, packs, etc)
   - Get as close as possible to local / non-Docker development speed with separate webpack-dev-server and HMR - hot module reloading
   - All credit goes to [Ruby on Whales](https://evilmartians.com/chronicles/ruby-on-whales-docker-for-ruby-rails-development) for this and much of the Dockerfile development target
-- Automate setting up Docker/local development with VSCode tasks.
-  - Run "build" tasks in VSCode that open/reload multiple shells for either:
+- Automate setting up Docker/local development with VS Code tasks.
+  - Run "build" tasks in VS Code that open/reload multiple shells for either:
     - Docker development
-    - Local developemtn
+    - Local development
 
 ## Setup
 
 - Install [Docker Desktop](https://www.docker.com/products/docker-desktop)
 - (optional) Install [OhMyZsh](https://ohmyz.sh/) for Zsh shell shortcuts in comments below for each shell command
-- (optional) Install [VSCode](https://code.visualstudio.com/) to use multi-shell tasks like "Docker development", see `.vscode/tasks.json`
+- (optional) Install [VS Code](https://code.visualstudio.com/) to use multi-shell tasks like "Docker development", see `.vscode/tasks.json`
 
 ## Running
 
 - First-time only, run `docker-compose build` and `docker-compose up webpacker` to set the network and install all dependencies
-- Afterwards you can use VSCode and CTRL/CMD-SHIFT-B to show "build" tasks from `.vscode/tasks.json`
+- Afterwards you can use VS Code and CTRL/CMD-SHIFT-B to show "build" tasks from `.vscode/tasks.json`
 - More commands with the Oh My Zsh aliases as comments (`dcb` for `docker-compose build`)...
 
 ```bash
