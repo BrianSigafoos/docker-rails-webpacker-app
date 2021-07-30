@@ -15,15 +15,39 @@
 
 ## Setup
 
+### Install
+
 - Install [Docker Desktop](https://www.docker.com/products/docker-desktop)
 - (optional) Install [OhMyZsh](https://ohmyz.sh/) for Zsh shell shortcuts in comments below for each shell command
 - (optional) Install [VS Code](https://code.visualstudio.com/) to use multi-shell tasks like "Docker development", see `.vscode/tasks.json`
 
-## Running
+### Run
 
-- First-time only, run `docker-compose build` and `docker-compose up webpacker` to set the network and install all dependencies
-- Afterwards you can use VS Code and CTRL/CMD-SHIFT-B to show "build" tasks from `.vscode/tasks.json`
-- More commands with the Oh My Zsh aliases as comments (`dcb` for `docker-compose build`)...
+```shell
+# Set master.key and credentials.yml.enc
+EDITOR=vim rails credentials:edit
+# Then type: `:wq` to exit and save
+# Then comment out or delete in `.gitignore the line with credentials.yml.enc
+
+# Build the development (target) image
+# dcb     <- Oh My Zsh shortcut (if installed)
+docker-compose build
+
+# Set up database by running rake db:setup  (rake db:create; rake db:schema_load)
+# dcr --rm bash rake db:setup   <- Oh My Zsh shortcut (if installed)
+docker-compose run --rm bash rake db:setup
+```
+
+## Development
+
+- Use VS Code and CTRL/CMD-SHIFT-B to show "build" tasks from `.vscode/tasks.json`
+  - Docker development
+  - Local development
+- Or manually run whatever you like, typically for development
+  - `docker-compose up webpacker` - install gems, packages, and run webpack-dev-server
+  - `docker-compose up rails`` - run rails server
+  - `docker-compose run --rm bash` - a "runner" to keep up for quick debugging
+- Note: Oh My Zsh aliases are comments below (`dcb` for `docker-compose build`)...
 
 ```bash
 # Script to start Docker on Mac
@@ -51,7 +75,7 @@ docker-compose run --rm bash rake db:migrate
 docker-compose run --rm bash rake db:setup
 ```
 
-## Production builds
+## Production build
 
 - Calling `docker build` on the Dockerfile _without_ target=development will build an image for production
   - The production image only includes the app's code, Ruby, gems, and precompiled packs and assets.
@@ -111,6 +135,7 @@ docker system prune -a
 
 - [How to use docker multi-stage build to create optimal images for dev and production](https://geshan.com.np/blog/2019/11/how-to-use-docker-multi-stage-build/)
 - [Ruby on Whales: Dockerizing Ruby and Rails development](https://evilmartians.com/chronicles/ruby-on-whales-docker-for-ruby-rails-development)
+- [Running a Rails app with Webpacker and Docker](https://medium.com/@dirkdk/running-a-rails-app-with-webpacker-and-docker-8d29153d3446)
 
 ## More Reading
 
