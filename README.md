@@ -45,7 +45,7 @@ docker-compose run --rm bash rake db:setup
   - Local development
 - Or manually run whatever you like, typically for development
   - `docker-compose up webpacker` - install gems, packages, and run webpack-dev-server
-  - `docker-compose up rails`` - run rails server
+  - `docker-compose up rails` - run rails server
   - `docker-compose run --rm bash` - a "runner" to keep up for quick debugging
 - Note: Oh My Zsh aliases are comments below (`dcb` for `docker-compose build`)...
 
@@ -71,8 +71,10 @@ docker-compose run --rm bash
 docker-compose run --rm bash rake db:migrate
 
 # dcr --rm bash rake db:setup
-# dcr --rm bash rake db:reset
 docker-compose run --rm bash rake db:setup
+
+# dcr --rm bash rake db:reset
+docker-compose run --rm bash rake db:reset
 ```
 
 ## Production build
