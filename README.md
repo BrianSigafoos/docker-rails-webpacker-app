@@ -2,13 +2,16 @@
 
 ## Principles
 
-- Use one Dockerfile with a multi-stage build to support both development and production builds
-  - Thanks to multi-stage can target both development and production builds in 1 easier to maintain Dockerfile
-- Use one docker-compose.yml to target only the "development" stage of the Dockerfile
-  - Optimize for development speed (engineer happiness)
+- One `Dockerfile` with multi-stage builds to support both development and production builds.
+  - Thanks to [Docker multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/), we can target both development and production builds in 1 easy to maintain Dockerfile
+- One `docker-compose.yml` to target only the "development" stage of the Dockerfile, optimized for development speed, aka engineer happiness.
   - Make Docker fast enough for development with persisted volumes for all dependencies and generated content (bundle node_modules, packs, etc)
-  - Get as close to possible as local / non-Docker development speed with separate webpack-dev-server and HMR - hot module reloading
+  - Get as close as possible to local / non-Docker development speed with separate webpack-dev-server and HMR - hot module reloading
   - All credit goes to [Ruby on Whales](https://evilmartians.com/chronicles/ruby-on-whales-docker-for-ruby-rails-development) for this and much of the Dockerfile development target
+- Automate setting up Docker/local development with VSCode tasks.
+  - Run "build" tasks in VSCode that open/reload multiple shells for either:
+    - Docker development
+    - Local developemtn
 
 ## Setup
 
@@ -18,12 +21,12 @@
 
 ## Running
 
-- First-time only first run `docker-compose build` and `docker-compose up webpacker` to set the network and install all dependencies
+- First-time only, run `docker-compose build` and `docker-compose up webpacker` to set the network and install all dependencies
 - Afterwards you can use VSCode and CTRL/CMD-SHIFT-B to show "build" tasks from `.vscode/tasks.json`
 - More commands with the Oh My Zsh aliases as comments (`dcb` for `docker-compose build`)...
 
 ```bash
-# Script
+# Script to start Docker on Mac
 .dockerdev/docker-start.sh
 
 # dcb
@@ -50,16 +53,16 @@ docker-compose run --rm bash rake db:setup
 
 ## Production builds
 
-- With target=development set in docker-compose.yml this will build an image to be used in production
-- Only things needed to actually run the app like Ruby, gems, and packs will be in it.
-  - No NodeJS, node_modules in the final production image
+- Calling `docker build` on the Dockerfile _without_ target=development will build an image for production
+  - The production image only includes the app's code, Ruby, gems, and precompiled packs and assets.
+    - No NodeJS, node_modules in the final production image
 
 ```bash
 BUILD_DATE=$(date +%Y%m%d-%H%M%S)
-docker build -t app:$BUILD_DATE .
+docker build -t demo_app:$BUILD_DATE .
 
-# Use docker run  with ... bash to check on a build image
-docker run --name app_latest --rm -i -t app:$BUILD_DATE bash
+# Use docker run  with `bash` to check on that build image
+docker run --name demo_app_latest --rm -i -t app:$BUILD_DATE bash
 ```
 
 ## Debugging
@@ -69,8 +72,7 @@ docker run --name app_latest --rm -i -t app:$BUILD_DATE bash
 docker-compose run --rm bash
 ```
 
-
-## Oh My Zsh aliases
+## Oh My Zsh aliases for Docker
 
 ```bash
 dcb='docker-compose build'
@@ -105,7 +107,12 @@ docker system prune -a
  docker system prune -a --volumes
 ```
 
-## Resources
+## Credits and Resources
 
-- [Ruby on Whales](https://evilmartians.com/chronicles/ruby-on-whales-docker-for-ruby-rails-development)
+- [How to use docker multi-stage build to create optimal images for dev and production](https://geshan.com.np/blog/2019/11/how-to-use-docker-multi-stage-build/)
+- [Ruby on Whales: Dockerizing Ruby and Rails development](https://evilmartians.com/chronicles/ruby-on-whales-docker-for-ruby-rails-development)
+
+## More Reading
+
+- [Build images on GitHub Actions with Docker layer caching](https://evilmartians.com/chronicles/build-images-on-github-actions-with-docker-layer-caching)
 - [Deploying Rails 6 Assets with Docker and Kubernetes](https://blog.cloud66.com/deploying-rails-6-assets-with-docker/)
