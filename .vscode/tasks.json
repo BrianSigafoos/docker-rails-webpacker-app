@@ -126,6 +126,55 @@
         "kind": "build",
         "isDefault": true
       }
+    },
+    {
+      "label": "rubocop auto-correct file",
+      "type": "shell",
+      "command": "bundle exec rubocop -A ${relativeFile}",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "erblint file",
+      "type": "shell",
+      "command": "bundle exec erblint ${relativeFile}",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "erblint auto-correct file",
+      "type": "shell",
+      "command": "bundle exec erblint -a ${relativeFile}",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "prettier auto-correct file",
+      "type": "shell",
+      "command": "yarn prettier --write ${relativeFile}",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "rubocop generate todo",
+      "type": "shell",
+      "command": "bundle exec rubocop --auto-gen-config",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always"
+      }
     }
   ]
 }

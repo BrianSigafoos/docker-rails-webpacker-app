@@ -30,7 +30,12 @@
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-dev-server": "^3.11.2"
   },
-    "scripts": {
+  "resolutions": {
+    "css-what": ">=5.0.1",
+    "glob-parent": ">5.1.2",
+    "postcss": ">=8.2.10"
+  },
+  "scripts": {
     "lint": "yarn css:lint; yarn js:lint; yarn md:lint; yarn json:lint",
     "fix": "yarn css:fix; yarn js:fix; yarn md:fix; yarn json:fix",
     "eslint": "eslint",
@@ -64,7 +69,7 @@
     "webpack:analyze_json": "webpack-bundle-analyzer tmp/webpack-stats.json public/packs"
   },
   "version": "0.1.0",
- "pre-commit": [
+  "pre-commit": [
     "lint-staged"
   ],
   "babel": {
