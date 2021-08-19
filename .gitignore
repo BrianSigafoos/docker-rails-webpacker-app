@@ -78,6 +78,7 @@ build-iPhoneSimulator/
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/secrets.yml.key
 
 # TODO: this file should be created AND checked into git for all forks
 # Run: `EDITOR=vim rails credentials:edit`

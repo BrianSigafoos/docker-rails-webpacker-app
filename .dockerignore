@@ -28,3 +28,7 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Ignore local secret keys
+/config/master.key
+/config/secrets.yml.key

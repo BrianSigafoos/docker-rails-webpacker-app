@@ -77,7 +77,7 @@ docker-compose run --rm bash rake db:setup
 docker-compose run --rm bash rake db:reset
 ```
 
-## Production build
+## Production builds
 
 - Calling `docker build` on the Dockerfile _without_ target=development will build an image for production
   - The production image only includes the app's code, Ruby, gems, and precompiled packs and assets.
