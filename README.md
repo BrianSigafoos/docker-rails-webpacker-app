@@ -36,6 +36,10 @@ EDITOR=vim rails credentials:edit
 # Step 2
 # NEXT: Copy and paste the value now in config/master.key
 # into the Github repository secrets as `RAILS_MASTER_KEY`
+
+# Step 3
+# Push up a commit and then trigger a build
+.dockerdev/build.sh
 ```
 
 - More initial setup for local development
