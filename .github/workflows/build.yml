@@ -41,7 +41,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: name/app
+          images: ${{ env.REPOSITORY }}
 
       # https://github.com/docker/build-push-action
       # TODO: confirm and fix caching!

@@ -139,7 +139,7 @@ COPY --chown=$NON_ROOT_USER:$NON_ROOT_USER . ./
 RUN yarn install --production --cache-folder $YARN_CACHE_FOLDER
 
 # Run precompile with RAILS_MASTER_KEY passed in
-RUN --mount=type=secret,id=rails_master_key,dst=/app/config/secrets.yml.key \
+RUN --mount=type=secret,id=rails_master_key,dst=/app/config/master.key \
   RAILS_ENV=production bin/rails assets:precompile
 
 
