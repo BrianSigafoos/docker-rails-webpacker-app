@@ -83,6 +83,10 @@
       "label": "local webpacker",
       "type": "shell",
       "command": "yarn serve",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",

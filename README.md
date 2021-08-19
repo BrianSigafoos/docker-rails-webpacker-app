@@ -23,11 +23,28 @@
 
 ### Run
 
+- If you clone this repo, you'll need to recreate the `config/credentials.yml.enc`
+- And for Github Actions to work, you'll need to set `RAILS_MASTER_KEY` in the Repo Settings :: Secrets.
+
 ```shell
-# Set master.key and credentials.yml.enc
+# Step 1
+# Delete example credentials.yml.enc
+rm config/credentials.yml.enc
 EDITOR=vim rails credentials:edit
 # Then type: `:wq` to exit and save
-# Then comment out or delete in `.gitignore the line with credentials.yml.enc
+
+# Step 2
+# NEXT: Copy and paste the value now in config/master.key
+# into the Github repository secrets as `RAILS_MASTER_KEY`
+
+# Step 3
+# Push up a commit and then trigger a build
+.dockerdev/build.sh
+```
+
+- More initial setup for local development
+
+```shell
 
 # Build the development (target) image
 # dcb     <- Oh My Zsh shortcut (if installed)
