@@ -88,7 +88,7 @@ BUILD_DATE=$(date +%Y%m%d-%H%M%S)
 docker build -t demo_app:$BUILD_DATE .
 
 # Use docker run  with `bash` to check on that build image
-docker run --name demo_app_latest --rm -i -t app:$BUILD_DATE bash
+docker run --name demo_app_latest --rm -i -t demo_app:$BUILD_DATE bash
 ```
 
 ## Debugging
