@@ -150,7 +150,7 @@ COPY --chown=$USER:$USER --from=prod_gems $BUNDLE_PATH $BUNDLE_PATH
 COPY --chown=$USER:$USER . ./
 
 # Run precompile with RAILS_MASTER_KEY passed in
-RUN --mount=type=secret,id=rails_master_key,dst=/app/config/secrets.yml.key \
+RUN --mount=type=secret,id=rails_master_key,dst=/app/config/master.key \
   bin/rails assets:precompile
 
 
