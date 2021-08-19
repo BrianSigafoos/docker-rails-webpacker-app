@@ -77,7 +77,7 @@ docker-compose run --rm bash rake db:setup
 docker-compose run --rm bash rake db:reset
 ```
 
-## Production build
+## Production builds
 
 - Calling `docker build` on the Dockerfile _without_ target=development will build an image for production
   - The production image only includes the app's code, Ruby, gems, and precompiled packs and assets.
@@ -88,7 +88,7 @@ BUILD_DATE=$(date +%Y%m%d-%H%M%S)
 docker build -t demo_app:$BUILD_DATE .
 
 # Use docker run  with `bash` to check on that build image
-docker run --name demo_app_latest --rm -i -t app:$BUILD_DATE bash
+docker run --name demo_app_latest --rm -i -t demo_app:$BUILD_DATE bash
 ```
 
 ## Debugging
