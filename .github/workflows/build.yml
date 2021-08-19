@@ -1,3 +1,5 @@
+# Build image and push to Github Container Registry
+#
 # Built via example in Github docs and links below from docker/... actions
 # https://docs.github.com/en/actions/guides/publishing-docker-images
 name: Build image
