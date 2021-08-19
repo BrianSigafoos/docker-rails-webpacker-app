@@ -160,3 +160,33 @@ docker system prune -a
 
 - [Build images on GitHub Actions with Docker layer caching](https://evilmartians.com/chronicles/build-images-on-github-actions-with-docker-layer-caching)
 - [Deploying Rails 6 Assets with Docker and Kubernetes](https://blog.cloud66.com/deploying-rails-6-assets-with-docker/)
+
+## Misc
+
+### Git hooks
+
+- Copy and paste code below to protect `main` branch from git push by admins
+
+```bash
+cat << 'DOC' > .git/hooks/pre-push
+#!/bin/bash
+
+protected_branch='main'
+current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+
+if [ $protected_branch = $current_branch ]
+then
+    read -p "You're about to push to main, is that what you intended? [y|n] " -n 1 -r < /dev/tty
+    echo
+    if echo $REPLY | grep -E '^[Yy]$' > /dev/null
+    then
+        exit 0 # push will execute
+    fi
+    exit 1 # push will not execute
+else
+    exit 0 # push will execute
+fi
+DOC
+
+chmod +x .git/hooks/pre-push
+```
