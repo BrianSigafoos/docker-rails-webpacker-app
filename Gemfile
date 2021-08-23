@@ -13,7 +13,7 @@ gem 'pg'
 # instead so only using turbo-rails
 gem 'turbo-rails'
 gem 'view_component', require: 'view_component/engine'
-gem 'webpacker', '6.0.0.beta.7'
+gem 'webpacker', '6.0.0.rc.1'
 
 # Use Puma as the app server
 gem 'puma'
