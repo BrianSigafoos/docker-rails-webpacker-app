@@ -161,6 +161,10 @@ docker system prune -a
 - [Build images on GitHub Actions with Docker layer caching](https://evilmartians.com/chronicles/build-images-on-github-actions-with-docker-layer-caching)
 - [Deploying Rails 6 Assets with Docker and Kubernetes](https://blog.cloud66.com/deploying-rails-6-assets-with-docker/)
 
+## Linting
+
+Use [hadolint](https://github.com/hadolint/hadolint) to lint: `hadolint Dockerfile`
+
 ## Misc
 
 ### Git hooks
