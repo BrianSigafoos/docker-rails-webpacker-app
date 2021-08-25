@@ -65,9 +65,10 @@ RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN curl -sL https://deb.nodesource.com/setup_$NODEJS_MAJOR_VERSION.x | bash -
 
 # Add Yarn to the sources list
-# RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-RUN wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+# For Mac M1: uncomment yarn to install below
+# RUN wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
 
 # Install dependencies
 COPY --chown=$USER:$USER ./.dockerdev/Aptfile /tmp/Aptfile
