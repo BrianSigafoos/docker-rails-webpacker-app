@@ -13,3 +13,10 @@ updates:
       interval: weekly
       time: '04:00'
     open-pull-requests-limit: 10
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: daily
+      time: '04:00'

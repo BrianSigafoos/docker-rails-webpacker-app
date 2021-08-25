@@ -1,3 +1,6 @@
 # Declare anything needed for apt-get specific to this app
 
-vim
+# Is vim really needed? If yes, uncomment this line. Adds ~35MB to the image.
+# vim
+# Or consider vim-tiny
+# vim-tiny
