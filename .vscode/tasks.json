@@ -120,7 +120,7 @@
     {
       "label": "Docker build - production",
       "type": "shell",
-      "command": "docker build . -t app:$(date +%Y%m%d-%H%M%S) --target=production",
+      "command": "docker build . -t app:$(date +%Y%m%d-%H%M%S) --secret id=rails_master_key,src=./config/master.key",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",

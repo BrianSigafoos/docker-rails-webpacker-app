@@ -65,9 +65,10 @@ RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN curl -sL https://deb.nodesource.com/setup_$NODEJS_MAJOR_VERSION.x | bash -
 
 # Add Yarn to the sources list
-# RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-RUN wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+# For Mac M1: uncomment yarn to install below
+# RUN wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
 
 # Install dependencies
 COPY --chown=$USER:$USER ./.dockerdev/Aptfile /tmp/Aptfile
@@ -150,7 +151,7 @@ COPY --chown=$USER:$USER --from=prod_gems $BUNDLE_PATH $BUNDLE_PATH
 COPY --chown=$USER:$USER . ./
 
 # Run precompile with RAILS_MASTER_KEY passed in
-RUN --mount=type=secret,id=rails_master_key,dst=/app/config/secrets.yml.key \
+RUN --mount=type=secret,id=rails_master_key,dst=/app/config/master.key \
   bin/rails assets:precompile
 
 
@@ -158,6 +159,9 @@ RUN --mount=type=secret,id=rails_master_key,dst=/app/config/secrets.yml.key \
 # Final production image
 ###
 FROM ruby:$RUBY_VERSION-slim-buster AS production
+
+# Add label for source repo. On Github, this connects the GHCR package to the repo.
+LABEL org.opencontainers.image.source https://github.com/BrianSigafoos/docker-rails-webpacker-app
 
 # Args needed for this container
 ARG POSTGRES_MAJOR_VERSION

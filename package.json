@@ -42,6 +42,7 @@
     "lint-staged": "$(yarn bin)/lint-staged",
     "css:fix": "yarn prettier --write 'app/**/*.scss'",
     "css:lint": "yarn prettier --check 'app/**/*.scss'",
+    "docker:lint": "hadolint Dockerfile",
     "erb:lint": "bundle exec erblint --lint-all",
     "erb:fix": "bundle exec erblint -a --lint-all",
     "i18n:add": "i18n-tasks add-missing",
