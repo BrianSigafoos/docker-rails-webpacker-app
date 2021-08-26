@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.15.0",
-    "@hotwired/turbo-rails": "^7.0.0-rc.1",
+    "@hotwired/turbo-rails": "^7.0.0-rc.2",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.1.4",
     "@rails/webpacker": "^6.0.0-beta.7",
