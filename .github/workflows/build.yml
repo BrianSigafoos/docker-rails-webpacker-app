@@ -15,8 +15,6 @@ on:
 env:
   REGISTRY: ghcr.io
   REPOSITORY: ${{ github.repository }}
-  # TODO: make this less awkward
-  REPOSITORY_DOWNCASED: briansigafoos/docker-rails-webpacker-app
 
 jobs:
   build:
