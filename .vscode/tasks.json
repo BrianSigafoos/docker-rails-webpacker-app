@@ -3,12 +3,14 @@
   // for the documentation about the tasks.json format
   "version": "2.0.0",
   "tasks": [
+    // Uses dependsOrder: sequence to make sure depencencies are updated first.
+    // Then run docker webpacker, rails, and bash.
     {
       "label": "Docker development",
+      "dependsOrder": "sequence",
       "dependsOn": [
-        "docker webpacker", // Updates dependencies and starts webpack-dev-server
-        "docker rails",
-        "docker bash"
+        "docker dependencies", // First, update dependencies (Gems, JS packages)
+        "docker webpacker and rails server",
       ],
       // Mark as the default build task so cmd/ctrl+shift+b will create them
       "group": {
@@ -22,9 +24,32 @@
       // }
     },
     {
+      "label": "docker webpacker and rails server",
+      "dependsOn": [
+        "docker webpacker",
+        "docker rails",
+        "docker bash"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "docker dependencies",
+      "type": "shell",
+      "command": "scripts/docker-start.sh; docker-compose build; docker-compose run --rm bash bundle install; yarn install; touch tmp/restart.txt",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
       "label": "docker webpacker",
       "type": "shell",
-      "command": ".dockerdev/docker-start.sh; docker-compose up webpacker",
+      "command": "docker-compose up webpacker",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -34,7 +59,7 @@
     {
       "label": "docker rails",
       "type": "shell",
-      "command": ".dockerdev/docker-start.sh; docker-compose up rails",
+      "command": "docker-compose up rails",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -44,7 +69,7 @@
     {
       "label": "docker bash",
       "type": "shell",
-      "command": ".dockerdev/docker-start.sh; docker-compose run --rm bash",
+      "command": "docker-compose run --rm bash",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -120,7 +145,9 @@
     {
       "label": "Docker build - production",
       "type": "shell",
-      "command": "docker build . -t app:$(date +%Y%m%d-%H%M%S) --secret id=rails_master_key,src=./config/master.key",
+      "command": "export SHA_BUILD_TAG=$(git rev-parse --short HEAD); docker build . -t playpass:$SHA_BUILD_TAG --secret id=rails_master_key,src=./config/master.key",
+      // Or use DATE_BUILD_TAG for debugging production builds locally
+      // "command": "export DATE_BUILD_TAG=$(date +%Y%m%d-%H%M%S); docker build . -t playpass:$DATE_BUILD_TAG --secret id=rails_master_key,src=./config/master.key",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",

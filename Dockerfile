@@ -35,7 +35,7 @@ RUN apt-get update -qq \
     build-essential \
     gnupg2 \
     # For Mac M1: uncomment wget for yarn to install below. Otherwise no need for wget and curl.
-    # wget \
+    wget \
     curl \
     less \
     git \
@@ -66,8 +66,8 @@ RUN curl -sL https://deb.nodesource.com/setup_$NODEJS_MAJOR_VERSION.x | bash -
 
 # Add Yarn to the sources list
 # For Mac M1: uncomment yarn to install below
-# RUN wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+RUN wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+# RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
   && echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
 
 # Install dependencies

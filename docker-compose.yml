@@ -61,7 +61,7 @@ services:
 
   rails:
     <<: *backend
-    command: bundle exec rails server -b 0.0.0.0
+    command: bin/rails server -b 0.0.0.0
     ports:
       - '3000:3000'
 
@@ -71,11 +71,7 @@ services:
 
   webpacker:
     <<: *app
-    # command: ./bin/webpack-dev-server
-    # yarn serve makes sure everything is up to date and restarts the server
-    # before starting the webpack-dev-server
-    # bundle install; yarn install; touch tmp/restart.txt; yarn webpack-dev-server
-    command: yarn serve
+    command: bin/webpack-dev-server
     ports:
       - '3035:3035'
     volumes:
