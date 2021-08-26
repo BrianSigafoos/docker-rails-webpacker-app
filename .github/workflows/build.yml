@@ -41,6 +41,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
       - name: Set outputs
         id: vars
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
@@ -51,7 +57,8 @@ jobs:
           push: true
           build-args: REVISION=${{ steps.vars.outputs.sha_short }}
           secrets: "rails_master_key=${{ secrets.RAILS_MASTER_KEY }}"
-          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY_DOWNCASED }}:${{ steps.vars.outputs.sha_short }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           # TODO: fix caching!
           cache-from: type=gha
           cache-to: type=gha,mode=max
