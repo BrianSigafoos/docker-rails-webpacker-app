@@ -15,6 +15,8 @@ on:
 env:
   REGISTRY: ghcr.io
   REPOSITORY: ${{ github.repository }}
+  # TODO: make this less awkward
+  REPOSITORY_DOWNCASED: briansigafoos/docker-rails-webpacker-app
 
 jobs:
   build:
@@ -39,13 +41,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # https://github.com/docker/metadata-action
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: ${{ env.REPOSITORY }}
-
       - name: Set outputs
         id: vars
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
@@ -56,8 +51,7 @@ jobs:
           push: true
           build-args: REVISION=${{ steps.vars.outputs.sha_short }}
           secrets: "rails_master_key=${{ secrets.RAILS_MASTER_KEY }}"
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY_DOWNCASED }}:${{ steps.vars.outputs.sha_short }}
           # TODO: fix caching!
           cache-from: type=gha
           cache-to: type=gha,mode=max
