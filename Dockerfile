@@ -36,7 +36,7 @@ RUN apt-get update -qq \
   && apt-get install -yq --no-install-recommends \
     build-essential \
     gnupg2 \
-    # For Mac M1: uncomment wget for yarn to install below. Otherwise no need for wget and curl.
+    # TODO: remove this hack for Mac M1 to use wget to install yarn, instead of curl
     wget \
     curl \
     less \
@@ -67,7 +67,7 @@ RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN curl -sL https://deb.nodesource.com/setup_$NODEJS_MAJOR_VERSION.x | bash -
 
 # Add Yarn to the sources list
-# For Mac M1: uncomment yarn to install below
+# TODO: remove this hack for Mac M1 to use wget to install yarn, instead of curl
 RUN wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 # RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
   && echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
