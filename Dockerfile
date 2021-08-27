@@ -9,6 +9,7 @@ ARG YARN_VERSION=1.22.5
 ARG USER=nonroot
 ARG USER_ID=1001
 ARG REVISION=not_set
+ARG DEBIAN_FRONTEND=noninteractive
 
 ###
 # Development system and dependencies
@@ -24,6 +25,7 @@ ARG BUNDLER_VERSION
 ARG YARN_VERSION
 ARG USER
 ARG USER_ID
+ARG DEBIAN_FRONTEND
 
 # Recommended by hadolint
 # https://github.com/hadolint/hadolint/wiki/DL4006
@@ -31,7 +33,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Common dependencies
 RUN apt-get update -qq \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+  && apt-get install -yq --no-install-recommends \
     build-essential \
     gnupg2 \
     # For Mac M1: uncomment wget for yarn to install below. Otherwise no need for wget and curl.
@@ -45,8 +47,8 @@ RUN apt-get update -qq \
   && truncate -s 0 /var/log/*log
 
 # IF using mimemagic, download MIME types database
-# RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get -yq upgrade && \
-#   DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+# RUN apt-get update -qq && apt-get -yq upgrade && \
+#   apt-get install -yq --no-install-recommends \
 #     shared-mime-info \
 #   && cp /usr/share/mime/packages/freedesktop.org.xml ./ \
 #   && apt-get remove -y --purge shared-mime-info \
@@ -73,8 +75,8 @@ RUN wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 # Install dependencies
 COPY --chown=$USER:$USER ./.dockerdev/Aptfile /tmp/Aptfile
 RUN apt-get update -qq \
-  && DEBIAN_FRONTEND=noninteractive apt-get -yq upgrade \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+  && apt-get -yq upgrade \
+  && apt-get install -yq --no-install-recommends \
     libpq-dev \
     postgresql-client-$POSTGRES_MAJOR_VERSION \
     nodejs \
@@ -168,6 +170,7 @@ ARG POSTGRES_MAJOR_VERSION
 ARG USER
 ARG USER_ID
 ARG REVISION
+ARG DEBIAN_FRONTEND
 
 ENV BUNDLE_PATH=/usr/local/bundle
 ENV GEM_HOME=$BUNDLE_PATH
@@ -184,16 +187,16 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Do this in 1 RUN command to install curl, get what's needed for PostgreSQL,
 # and then remove curl.
 RUN apt-get update -qq \
-  && DEBIAN_FRONTEND=noninteractive apt-get -yq upgrade \
+  && apt-get -yq upgrade \
   # First, get gnupg2 and curl, needed to install postgresql-client
-  && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+  && apt-get install -yq --no-install-recommends \
     gnupg2 \
     curl \
   && curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' $POSTGRES_MAJOR_VERSION > /etc/apt/sources.list.d/pgdg.list \
   && apt-get update -qq \
   # Then, install postgresql-client
-  && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+  && apt-get install -yq --no-install-recommends \
   libpq-dev \
   postgresql-client-$POSTGRES_MAJOR_VERSION \
   "$(grep -Ev '^\s*#' /tmp/Aptfile | xargs)" \
@@ -202,7 +205,7 @@ RUN apt-get update -qq \
   && curl https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem \
     --output /home/$USER/.postgresql/root.crt \
   # Finally, remove gnupg2 and curl
-  && DEBIAN_FRONTEND=noninteractive apt-get remove -yq --purge \
+  && apt-get remove -yq --purge \
     gnupg2 \
     curl \
   && apt-get clean \
