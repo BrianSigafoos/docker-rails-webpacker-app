@@ -49,6 +49,7 @@ jobs:
           tags: |
             type=sha,prefix=
 
+      # TODO: replace with short SHA from above output
       - name: Set outputs
         id: vars
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
