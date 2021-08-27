@@ -15,6 +15,7 @@ on:
 env:
   REGISTRY: ghcr.io
   REPOSITORY: ${{ github.repository }}
+  REPOSITORY_DOWNCASED: briansigafoos/docker-rails-webpacker-app
 
 jobs:
   build:
@@ -60,8 +61,8 @@ jobs:
           secrets: "rails_master_key=${{ secrets.RAILS_MASTER_KEY }}"
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.REPOSITORY }}:buildcache
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.REPOSITORY }}:buildcache,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.REPOSITORY_DOWNCASED }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.REPOSITORY_DOWNCASED }}:buildcache,mode=max
           # TODO: switch to type=gha caching once it works/is stable.
           # cache-from: type=gha
           # cache-to: type=gha,mode=max
