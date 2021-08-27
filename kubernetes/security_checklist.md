@@ -6,14 +6,14 @@ A summary of the key recommendations from each section are:
 
 - Kubernetes Pod security
   - [x] Use containers built to run applications as non-root users
-  - [ ] Where possible, run containers with immutable file systems
+  - [x] Where possible, run containers with immutable file systems
   - [ ] Scan container images for possible vulnerabilities or misconfigurations
   - [ ] Use a [Pod Security Policy (deprecated 1.21)](https://kubernetes.io/docs/concepts/policy/pod-security-policy/) -> [Pod Security admission controller (new 1.22)](https://kubernetes.io/docs/concepts/security/pod-security-admission/) to enforce a minimum level of security
         including:
-    - [ ] Preventing privileged containers
+    - [x] Preventing privileged containers
     - [ ] Denying container features frequently exploited to breakout, such
           as hostPID, hostIPC, hostNetwork, allowedHostPath
-    - [ ] Rejecting containers that execute as the root user or allow
+    - [x] Rejecting containers that execute as the root user or allow
           elevation to root
     - [ ] Hardening applications against exploitation using security services
           such as SELinux®, AppArmor®, and seccomp

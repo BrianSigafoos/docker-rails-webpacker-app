@@ -12,14 +12,15 @@
   - Run "build" tasks in VS Code that open/reload multiple shells for either:
     - Docker development
     - Local development
+- IN PROGRESS - Github Actions CI/CD pipeline to Kubernetes
 
 ## Setup
 
 ### Install
 
 - Install [Docker Desktop](https://www.docker.com/products/docker-desktop)
-- (optional) Install [OhMyZsh](https://ohmyz.sh/) for Zsh shell shortcuts in comments below for each shell command
-- (optional) Install [VS Code](https://code.visualstudio.com/) to use multi-shell tasks like "Docker development", see `.vscode/tasks.json`
+- (recommended) Install [OhMyZsh](https://ohmyz.sh/) for Zsh shell shortcuts in comments below for each shell command
+- (recommended) Install [VS Code](https://code.visualstudio.com/) to use multi-shell tasks like "Docker development", see `.vscode/tasks.json`
 
 ### Run
 
@@ -155,6 +156,7 @@ docker system prune -a
 - [How to use docker multi-stage build to create optimal images for dev and production](https://geshan.com.np/blog/2019/11/how-to-use-docker-multi-stage-build/)
 - [Ruby on Whales: Dockerizing Ruby and Rails development](https://evilmartians.com/chronicles/ruby-on-whales-docker-for-ruby-rails-development)
 - [Running a Rails app with Webpacker and Docker](https://medium.com/@dirkdk/running-a-rails-app-with-webpacker-and-docker-8d29153d3446)
+- [Github Actions to deploy to K8s - Valikube Actions](https://github.com/ValiMail/valikube-actions)
 
 ## More Reading
 
