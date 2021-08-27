@@ -1,0 +1,10 @@
+# Adds a 2nd label "instance: canary" to the existing "app: ..." label
+# allowing multiple instances to be deployed in the same namespace.
+- op: add
+  path: /metadata/labels/environment
+  value: canary
+
+# Copies from above
+- op: copy
+  path: /spec/selector/environment
+  from: /metadata/labels/environment

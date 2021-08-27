@@ -1,0 +1,53 @@
+# For a canary release to production, and verification at a subdomain.
+# Prior to full prod deployment.
+# https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/
+#
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: demoapp
+
+resources:
+- ../../base
+
+# Increase the number of replicas in prod
+replicas:
+- count: 1
+  name: demoapp-app
+
+- count: 1
+  name: demoapp-sidekiq
+
+patches:
+- path: ingress-host-patch.yaml
+  target:
+    kind: Ingress
+    name: demoapp-ingress
+
+- path: deployment-label-patch.yaml
+  target:
+    kind: Deployment
+    name: demoapp-app
+
+- path: deployment-label-patch.yaml
+  target:
+    kind: Deployment
+    name: demoapp-sidekiq
+
+- path: service-label-patch.yaml
+  target:
+    kind: Service
+    name: demoapp-service
+
+# Overwritten by deploy Github Action call to:
+#   kustomize edit set image "${{inputs.image}}"
+# If applying manually, outside of Github Actions, first update to a latest or
+# new SHA in newTag below.
+images:
+- name: ghcr.io/briansigafoos/docker-rails-webpacker-app
+  newTag: # abcd123
+
+configMapGenerator:
+- envs:
+  - config-map-canary.env
+  name: demoapp-config

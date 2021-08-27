@@ -1,0 +1,53 @@
+name: Deploy
+description: Deploy app to kubernetes
+
+inputs:
+  kustomize_overlay:
+    description: Kustomize overlay for deployment
+    required: true
+
+  cluster_name:
+    description: The name of the kubernetes cluster to deploy to
+    required: true
+
+  image:
+    description: The full name of the image with version to deploy
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Set up kubernetes config file
+      run: |
+        echo '::group::Setting up kubernetes config file'
+        aws eks update-kubeconfig --name ${{ inputs.cluster_name }}
+        echo '::endgroup::'
+      shell: bash
+
+    # TODO: figure out how to check for image's presence.
+    # - name: Check for image
+    #   id: vars
+    #   run: |
+    #     echo '::group::Checking image'
+    #     docker inspect --format '{{.Id}}' ${{ inputs.image }}
+    #     echo '::endgroup::'
+    #   shell: bash
+
+    - name: Set deploy image version
+      run: |
+        echo '::group::Setting deploy version'
+
+        cd kubernetes/overlays/${{ inputs.kustomize_overlay }}
+        kustomize edit set image "${{inputs.image}}"
+
+        echo 'Modified kustomization.yaml:'
+        cat kustomization.yaml
+        echo '::endgroup::'
+      shell: bash
+
+    - name: Run kubectl apply
+      run: |
+        echo '::group::Running kubectl apply'
+        kubectl apply -k kubernetes/overlays/${{ inputs.kustomize_overlay }}
+        echo '::endgroup::'
+      shell: bash

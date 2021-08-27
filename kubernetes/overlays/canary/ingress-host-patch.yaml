@@ -1,0 +1,5 @@
+# Specify the hostname for the ingress
+- op: add
+  path: /spec/rules/0/host
+  # TODO: replace demoapp.com with your domain's real hostname
+  # value: canary-deploy.<demoapp.com>

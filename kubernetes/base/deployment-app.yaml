@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: demoapp-app
+
+  labels:
+    app: demoapp
+
+# https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#deploymentspec-v1-apps
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: demoapp
+
+  template:
+    metadata:
+      labels:
+        app: demoapp
+
+    spec:
+      # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#container-v1-core
+      containers:
+        - name: demoapp-container
+          image: ghcr.io/briansigafoos/docker-rails-webpacker-app
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+
+          # TODO: revisit these numbers based on actual production usage
+          # and monitoring: kubectl resource-capacity --pods --util -n demoapp
+          resources:
+            requests:
+              cpu: 100m
+              memory: 600Mi
+            limits:
+              cpu: 1000m # 1 core
+              memory: 1000Mi
+
+          # Pass k8s metadata to containers. Can be used to tag requests.
+          env:
+            - name: K8S_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: K8S_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            # Puma expects this to be in tmp/pids/server.pid by default. But,
+            # instead of mounting the writable /app/tmp directory, and creating
+            # the tmp/pids folder, we can just configure Puma to use /app/tmp
+            - name: PIDFILE
+              value: tmp/server.pid
+
+          envFrom:
+            - secretRef:
+                name: demoapp-secrets
+            - configMapRef:
+                name: demoapp-config
+
+          # Naming port so that probes and service can reference it.
+          ports:
+            - name: pod-port
+              containerPort: 3000 # http port, same as in config/puma.rb
+
+          livenessProbe:
+            httpGet:
+              path: /health_check
+              port: pod-port
+            periodSeconds: 10
+            failureThreshold: 3
+
+          startupProbe:
+            httpGet:
+              path: /health_check
+              port: pod-port
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 30
+
+          # TODO: how is this different than livenessProbe? 
+          # readinessProbe:
+          #   httpGet:
+          #     path: /health_check
+          #     port: pod-port
+          #   periodSeconds: 10
+          #   failureThreshold: 3
+
+          volumeMounts:
+            # Since the container file system is read-only,
+            # we'll mount /app/tmp to allow writes to it by Rails cache
+            # /app/tmp/cache/ and Puma /app/tmp/server.pid
+            - name: app-tmp
+              mountPath: /app/tmp
+
+      imagePullSecrets:
+        - name: ghcr-k8s-pull
+        - name: dockerhub-k8s-pull
+
+      volumes:
+        - name: app-tmp
+          emptyDir: {}

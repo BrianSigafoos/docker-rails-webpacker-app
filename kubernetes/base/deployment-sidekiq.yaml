@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: demoapp-sidekiq
+
+  labels:
+    app: sidekiq
+
+# https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#deploymentspec-v1-apps
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: sidekiq
+
+  template:
+    metadata:
+      labels:
+        app: sidekiq
+
+    spec:
+      # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#container-v1-core
+      containers:
+        - name: sidekiq-container
+          image: ghcr.io/briansigafoos/docker-rails-webpacker-app
+          command: ['bundle', 'exec', 'sidekiq']
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+
+          # TODO: revisit these numbers based on actual production usage
+          # and monitoring: kubectl resource-capacity --pods --util -n demoapp
+          resources:
+            requests:
+              cpu: 50m
+              memory: 300Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi
+
+          # Pass k8s metadata to containers. Used to tag requests in AppSignal.
+          env:
+            - name: K8S_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: K8S_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+
+          envFrom:
+            - secretRef:
+                name: demoapp-secrets
+            - configMapRef:
+                name: demoapp-config
+
+          # TODO: probes for Sidekiq, likely not path based since no web server.
+          # livenessProbe:
+          #   httpGet:
+          #     path: /health_check
+          #     port: pod-port
+          #   periodSeconds: 10
+          #   failureThreshold: 3
+
+          # startupProbe:
+          #   httpGet:
+          #     path: /health_check
+          #     port: pod-port
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 10
+          #   failureThreshold: 30
+
+          # TODO: how is this different than livenessProbe?
+          # readinessProbe:
+          #   httpGet:
+          #     path: /health_check
+          #     port: pod-port
+          #   periodSeconds: 10
+          #   failureThreshold: 3
+
+          volumeMounts:
+            # Since the container file system is read-only,
+            # we'll mount /app/tmp to allow writes to it by Rails cache
+            # /app/tmp/cache/
+            - name: app-tmp
+              mountPath: /app/tmp
+
+      imagePullSecrets:
+        - name: ghcr-k8s-pull
+        - name: dockerhub-k8s-pull
+
+      volumes:
+        - name: app-tmp
+          emptyDir: {}
