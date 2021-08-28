@@ -35,7 +35,7 @@
     {
       "label": "docker dependencies",
       "type": "shell",
-      "command": ".dockerdev/docker-start.sh; docker-compose build; docker-compose run --rm bash bundle install && yarn install && rm -f tmp/pids/server.pid",
+      "command": ".dockerdev/docker-start.sh; docker-compose build; docker-compose run --rm bash bundle install && yarn install && rm -f tmp/pids/server.pid && touch tmp/restart.txt",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -78,10 +78,10 @@
     },
     {
       "label": "Local development",
+      "dependsOrder": "sequence",
       "dependsOn": [
-        "local webpacker", // Updates dependencies and starts webpack-dev-server
-        "local rails server",
-        "local rails console"
+        "local dependencies",
+        "local webpacker and rails server"
       ],
       // Mark as the default build task so cmd/ctrl+shift+b will create them
       "group": {
@@ -89,15 +89,33 @@
         "isDefault": true
       },
       "problemMatcher": []
-      // Uncomment to try to start the task on folder open
-      // "runOptions": {
-      //   "runOn": "folderOpen"
-      // }
+    },
+    {
+      "label": "local dependencies",
+      "type": "shell",
+      "command": "bundle install && yarn install && touch tmp/restart.txt",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "local webpacker and rails server",
+      "dependsOn": [
+        "local webpacker",
+        "local rails server"
+      ],
+      "problemMatcher": []
     },
     {
       "label": "local rails server",
       "type": "shell",
-      "command": "yarn rails",
+      "command": "rm -f log/development.log && rm -f log/test.log; bundle exec rails s -p 3000 -b lvh.me",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -107,11 +125,7 @@
     {
       "label": "local webpacker",
       "type": "shell",
-      "command": "yarn serve",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
+      "command": "bin/webpack-dev-server",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
