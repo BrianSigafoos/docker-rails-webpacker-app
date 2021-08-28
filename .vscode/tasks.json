@@ -35,7 +35,7 @@
     {
       "label": "docker dependencies",
       "type": "shell",
-      "command": "scripts/docker-start.sh; docker-compose build; docker-compose run --rm bash bundle install && yarn install && rm tmp/pids/server.pid",
+      "command": "scripts/docker-start.sh; docker-compose build; docker-compose run --rm bash bundle install && yarn install && rm -f tmp/pids/server.pid",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -60,7 +60,7 @@
       "label": "docker rails",
       "type": "shell",
       "command": "docker-compose up rails",
-      "problemMatcher": [], 
+      "problemMatcher": [],
       "presentation": {
         "reveal": "always",
         "panel": "dedicated"
