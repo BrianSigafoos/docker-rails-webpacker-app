@@ -120,6 +120,23 @@ spec:
             - name: app-tmp
               mountPath: /app/tmp
 
+      # Use podAntiAffinity to distribute this pod across nodes before adding
+      # more to the same node.
+      # https://stackoverflow.com/questions/41159843/kubernetes-pod-distribution-amongst-nodes
+      # https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                      - demoapp
+                topologyKey: kubernetes.io/hostname
+
       imagePullSecrets:
         - name: ghcr-k8s-pull
         - name: dockerhub-k8s-pull
