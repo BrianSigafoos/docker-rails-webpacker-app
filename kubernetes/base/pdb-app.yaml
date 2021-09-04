@@ -1,0 +1,15 @@
+#
+# https://kubernetes.io/docs/concepts/workloads/pods/disruptions/#pod-disruption-budgets
+# https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+#
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+
+metadata:
+  name: demoapp-app-pdb
+
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: demoapp

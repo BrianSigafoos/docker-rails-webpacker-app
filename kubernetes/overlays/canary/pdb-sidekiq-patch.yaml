@@ -1,0 +1,8 @@
+# Allow 0 available, since this is canary
+- op: replace
+  path: /spec/minAvailable
+  value: 0
+
+- op: add
+  path: /spec/selector/matchLabels/environment
+  value: canary
