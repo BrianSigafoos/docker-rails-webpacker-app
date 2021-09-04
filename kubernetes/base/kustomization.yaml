@@ -15,3 +15,5 @@ resources:
   - ingress.yaml
   - deployment-app.yaml
   - deployment-sidekiq.yaml
+  - pdb-app.yaml
+  - pdb-sidekiq.yaml

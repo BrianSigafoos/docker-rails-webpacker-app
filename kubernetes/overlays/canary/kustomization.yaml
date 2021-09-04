@@ -39,6 +39,16 @@ patches:
     kind: Service
     name: demoapp-service
 
+- path: pdb-app-patch.yaml
+  target:
+    kind: PodDisruptionBudget
+    name: demoapp-app-pdb
+
+- path: pdb-sidekiq-patch.yaml
+  target:
+    kind: PodDisruptionBudget
+    name: demoapp-sidekiq-pdb
+
 # Overwritten by deploy Github Action call to:
 #   kustomize edit set image "${{inputs.image}}"
 # If applying manually, outside of Github Actions, first update to a latest or
