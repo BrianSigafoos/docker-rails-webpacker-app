@@ -11,6 +11,7 @@ ARG USER_ID=1001
 ARG REVISION=not_set
 ARG DEBIAN_FRONTEND=noninteractive
 
+
 ###
 # Development system and dependencies
 ###
@@ -46,19 +47,6 @@ RUN apt-get update -qq \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && truncate -s 0 /var/log/*log
 
-# IF using mimemagic, download MIME types database
-# RUN apt-get update -qq && apt-get -yq upgrade && \
-#   apt-get install -yq --no-install-recommends \
-#     shared-mime-info \
-#   && cp /usr/share/mime/packages/freedesktop.org.xml ./ \
-#   && apt-get remove -y --purge shared-mime-info \
-#   && apt-get clean \
-#   && rm -rf /var/cache/apt/archives/* \
-#   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-#   && truncate -s 0 /var/log/*log \
-#   && mkdir -p /usr/share/mime/packages \
-#   && cp ./freedesktop.org.xml /usr/share/mime/packages/
-
 # Add PostgreSQL to sources list
 RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' $POSTGRES_MAJOR_VERSION > /etc/apt/sources.list.d/pgdg.list
@@ -74,6 +62,8 @@ RUN wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 
 # Install dependencies
 COPY --chown=$USER:$USER ./.dockerdev/Aptfile /tmp/Aptfile
+# hadolint ignore is for line splitting from Aptfile
+# hadolint ignore=SC2046
 RUN apt-get update -qq \
   && apt-get -yq upgrade \
   && apt-get install -yq --no-install-recommends \
@@ -81,7 +71,7 @@ RUN apt-get update -qq \
     postgresql-client-$POSTGRES_MAJOR_VERSION \
     nodejs \
     yarn=$YARN_VERSION-1 \
-    "$(grep -Ev '^\s*#' /tmp/Aptfile | xargs)" \
+    $(grep -Ev '^\s*#' /tmp/Aptfile | xargs) \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && truncate -s 0 /var/log/*log
@@ -117,8 +107,8 @@ WORKDIR /app
 ###
 FROM development AS prod_gems
 
-ENV BUNDLE_PATH=/usr/local/bundle
 ENV GEM_HOME=/usr/local/bundle
+ENV BUNDLE_PATH=$GEM_HOME
 
 # Copy Gemfile and Gemfile.lock for bundler to use
 COPY --chown=$USER:$USER Gemfile* ./
@@ -134,8 +124,8 @@ RUN bundle config set deployment true \
 ###
 FROM development AS prod_packs
 
-ENV BUNDLE_PATH=/usr/local/bundle
-ENV GEM_HOME=$BUNDLE_PATH
+ENV GEM_HOME=/usr/local/bundle
+ENV BUNDLE_PATH=$GEM_HOME
 ENV YARN_CACHE_FOLDER=/app/node_modules/.yarn-cache
 ENV RAILS_ENV=production
 ENV NODE_ENV=production
@@ -172,8 +162,8 @@ ARG USER_ID
 ARG REVISION
 ARG DEBIAN_FRONTEND
 
-ENV BUNDLE_PATH=/usr/local/bundle
-ENV GEM_HOME=$BUNDLE_PATH
+ENV GEM_HOME=/usr/local/bundle
+ENV BUNDLE_PATH=$GEM_HOME
 
 # Add non-root user
 RUN groupadd --gid $USER_ID $USER \
@@ -184,8 +174,12 @@ RUN groupadd --gid $USER_ID $USER \
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install dependencies required for PostgreSQL and 'pg' gem.
+# Also any other dependencies in Aptfile
 # Do this in 1 RUN command to install curl, get what's needed for PostgreSQL,
 # and then remove curl.
+COPY --chown=$USER:$USER ./.dockerdev/Aptfile /tmp/Aptfile
+# hadolint ignore is for line splitting from Aptfile
+# hadolint ignore=SC2046
 RUN apt-get update -qq \
   && apt-get -yq upgrade \
   # First, get gnupg2 and curl, needed to install postgresql-client
@@ -197,9 +191,9 @@ RUN apt-get update -qq \
   && apt-get update -qq \
   # Then, install postgresql-client
   && apt-get install -yq --no-install-recommends \
-  libpq-dev \
-  postgresql-client-$POSTGRES_MAJOR_VERSION \
-  "$(grep -Ev '^\s*#' /tmp/Aptfile | xargs)" \
+    libpq-dev \
+    postgresql-client-$POSTGRES_MAJOR_VERSION \
+    $(grep -Ev '^\s*#' /tmp/Aptfile | xargs) \
   # Also, use curl to AWS RDS certs for PostgreSQL
   && mkdir -p /home/$USER/.postgresql \
   && curl https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem \
