@@ -21,6 +21,13 @@ spec:
         app: sidekiq
 
     spec:
+      securityContext:
+        # Must match Dockerfile's USER_ID for User and Group
+        runAsUser: 1001
+        runAsGroup: 1001
+        # Set ownership of mounted volumes to the user running the container
+        fsGroup: 1001
+
       # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#container-v1-core
       containers:
         - name: sidekiq-container
@@ -51,6 +58,9 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            # See Ruby's Dir.tmpdir comment below
+            - name: TMPDIR
+              value: /app/tmp/tmp
 
           envFrom:
             - secretRef:
@@ -86,6 +96,19 @@ spec:
             # Since the container file system is read-only,
             # we'll mount /app/tmp to allow writes to it by Rails cache
             # /app/tmp/cache/
+            - name: app-tmp
+              mountPath: /app/tmp
+
+      # Ruby's Dir.tmpdir won't allow us to use the mounted folder /app/tmp
+      # for Tempfile.new. This initContainer creates a new /tmp folder inside
+      # the mounted folder that will have the correct folder permission.
+      # https://ruby-doc.org/stdlib-3.0.2/libdoc/tmpdir/rdoc/Dir.html
+      initContainers:
+        - name: make-tempfile-directory
+          image: busybox:1.33
+          # This new tmp folder must match TMPDIR env var above.
+          command: ["sh", "-c", "mkdir /app/tmp/tmp"]
+          volumeMounts:
             - name: app-tmp
               mountPath: /app/tmp
 
