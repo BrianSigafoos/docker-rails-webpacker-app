@@ -2,8 +2,8 @@ name: Deploy
 description: Deploy app to kubernetes
 
 inputs:
-  kustomize_overlay:
-    description: Kustomize overlay for deployment
+  k8s_env:
+    description: Kubernetes environment for kustomize overlay
     required: true
 
   cluster_name:
@@ -37,7 +37,7 @@ runs:
       run: |
         echo '::group::Setting deploy version'
 
-        cd kubernetes/overlays/${{ inputs.kustomize_overlay }}
+        cd kubernetes/overlays/${{ inputs.k8s_env }}
         kustomize edit set image "${{inputs.image}}"
 
         echo 'Modified kustomization.yaml:'
@@ -48,6 +48,6 @@ runs:
     - name: Run kubectl apply
       run: |
         echo '::group::Running kubectl apply'
-        kubectl apply -k kubernetes/overlays/${{ inputs.kustomize_overlay }}
+        kubectl apply -k kubernetes/overlays/${{ inputs.k8s_env }}
         echo '::endgroup::'
       shell: bash
