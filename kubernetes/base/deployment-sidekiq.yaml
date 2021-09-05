@@ -58,6 +58,12 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            # Puma is used by sidekiq_alive gem for probes
+            # Puma expects this to be in tmp/pids/server.pid by default. But,
+            # instead of mounting the writable /app/tmp directory, and creating
+            # the tmp/pids folder, we can just configure Puma to use /app/tmp
+            - name: PIDFILE
+              value: tmp/server.pid
             # See Ruby's Dir.tmpdir comment below
             - name: TMPDIR
               value: /app/tmp/tmp
@@ -68,29 +74,31 @@ spec:
             - configMapRef:
                 name: demoapp-config
 
-          # TODO: probes for Sidekiq, likely not path based since no web server.
-          # livenessProbe:
-          #   httpGet:
-          #     path: /health_check
-          #     port: pod-port
-          #   periodSeconds: 10
-          #   failureThreshold: 3
+          # Naming port so that probes and service can reference it.
+          ports:
+            - name: probe-port
+              containerPort: 7433
 
-          # startupProbe:
-          #   httpGet:
-          #     path: /health_check
-          #     port: pod-port
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 10
-          #   failureThreshold: 30
+          livenessProbe:
+            httpGet:
+              path: /
+              port: probe-port
+            periodSeconds: 10
+            failureThreshold: 3
 
-          # TODO: how is this different than livenessProbe?
-          # readinessProbe:
-          #   httpGet:
-          #     path: /health_check
-          #     port: pod-port
-          #   periodSeconds: 10
-          #   failureThreshold: 3
+          startupProbe:
+            httpGet:
+              path: /
+              port: probe-port
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 30
+
+          lifecycle:
+            preStop:
+              exec:
+                # SIGTERM triggers a quick exit; gracefully terminate instead
+                command: ['kubernetes/scripts/sidekiq_quiet']
 
           volumeMounts:
             # Since the container file system is read-only,
