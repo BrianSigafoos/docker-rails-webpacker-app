@@ -9,7 +9,7 @@ metadata:
   name: demoapp-sidekiq-pdb
 
 spec:
-  minAvailable: 2
+  minAvailable: 1
   selector:
     matchLabels:
       app: sidekiq
