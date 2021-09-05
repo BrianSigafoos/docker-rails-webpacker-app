@@ -92,14 +92,6 @@ spec:
             periodSeconds: 10
             failureThreshold: 30
 
-          # TODO: how is this different than livenessProbe?
-          # readinessProbe:
-          #   httpGet:
-          #     path: /health_check
-          #     port: pod-port
-          #   periodSeconds: 10
-          #   failureThreshold: 3
-
           volumeMounts:
             # Since the container file system is read-only,
             # we'll mount /app/tmp to allow writes to it by Rails cache

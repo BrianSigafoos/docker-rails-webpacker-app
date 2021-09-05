@@ -81,16 +81,16 @@ k rollout restart deployment demoapp-app
 kgp
 # Use jsonpath to get name of first pod
 # kubectl get pod
-POD_NAME=$(kgp -o=jsonpath='{.items[0].metadata.name}')
+POD=$(kgp -o=jsonpath='{.items[0].metadata.name}')
 # kubectl describe pod
-kdp $POD_NAME
+kdp $POD
 
 # Quick debugging if the pod is running + available
-# kubectl exec --stdin --tty $POD_NAME -- /bin/bash
-keti $POD_NAME -- /bin/bash
+# kubectl exec --stdin --tty $POD -- /bin/bash
+keti $POD -- /bin/bash
 
 # Or
-k attach $POD_NAME -c $CONTAINER_NAME -it
+k attach $POD -c $CONTAINER -it
 
 
 # Install vim for troubleshooting
@@ -114,37 +114,37 @@ bundle exec pumactl restart
 kgp
 
 # Set env vars
-POD_NAME=$(kgp -o=jsonpath='{.items[0].metadata.name}')
-CONTAINER_NAME=demoapp-container
+POD=$(kgp -o=jsonpath='{.items[0].metadata.name}')
+CONTAINER=demoapp-container
 
 # Describe the pod to target. Shows Events on that pod
-# kubectl describe pod $POD_NAME
-kdp $POD_NAME
+# kubectl describe pod $POD
+kdp $POD
 
 # View logs
 # kubectl logs
-# kl $POD_NAME $CONTAINER_NAME
-kl $POD_NAME
+# kl $POD $CONTAINER
+kl $POD
 # If failed
-# kl $POD_NAME $CONTAINER_NAME --previous
-kl $POD_NAME --previous
+# kl $POD $CONTAINER --previous
+kl $POD --previous
 
 # Get interactive shell into the pod for debugging
-# kubectl exec --stdin --tty $POD_NAME -- /bin/bash
-keti $POD_NAME -- /bin/bash
+# kubectl exec --stdin --tty $POD -- /bin/bash
+keti $POD -- /bin/bash
 
 # Create temporary debug pod copied from running pod
-# k debug $POD_NAME -it --image=ubuntu --share-processes --copy-to=app-debug
+# k debug $POD -it --image=ubuntu --share-processes --copy-to=app-debug
 
 # Debug a container that fails to start
 # https://kubernetes.io/docs/tasks/debug-application-cluster/debug-running-pod/#copying-a-pod-while-changing-its-command
-k debug $POD_NAME -it --copy-to=app-debug --container=$CONTAINER_NAME -- sh
+k debug $POD -it --copy-to=app-debug --container=$CONTAINER -- sh
 
-k attach app-debug -c $CONTAINER_NAME -it
+k attach app-debug -c $CONTAINER -it
 
 # Try running commands on container
-# kubectl exec ${POD_NAME} -c ${CONTAINER_NAME} -- ${CMD} ${ARG1} ${ARG2} ... ${ARGN}
-k exec $POD_NAME -c $CONTAINER_NAME --
+# kubectl exec ${POD} -c ${CONTAINER} -- ${CMD} ${ARG1} ${ARG2} ... ${ARGN}
+k exec $POD -c $CONTAINER --
 
 # Clean up the debug pod
 k delete pod app-debug

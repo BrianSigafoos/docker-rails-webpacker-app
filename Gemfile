@@ -18,6 +18,10 @@ gem 'webpacker', '6.0.0.beta.7'
 # Use Puma as the app server
 gem 'puma'
 
+gem 'sidekiq'
+gem 'sidekiq_alive'
+gem 'sidekiq-cron' 
+
 # Use SCSS for stylesheets
 # gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
