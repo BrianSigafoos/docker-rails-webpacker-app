@@ -35,7 +35,7 @@
     {
       "label": "docker dependencies",
       "type": "shell",
-      "command": ".dockerdev/docker-start.sh; docker-compose build; docker-compose run --rm bash bundle install && yarn install && rm -f tmp/pids/server.pid && touch tmp/restart.txt",
+      "command": ".dockerdev/docker-start.sh; docker-compose build; docker-compose run --rm bash sh -c \"bundle install && yarn install && rm -f tmp/pids/server.pid && touch tmp/restart.txt\"",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
