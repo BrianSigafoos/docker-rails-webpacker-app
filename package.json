@@ -20,7 +20,7 @@
     "webpack-cli": "^4.8.0"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.15.0",
+    "@babel/eslint-parser": "^7.18.2",
     "@webpack-cli/serve": "^1.5.2",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
