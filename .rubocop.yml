@@ -1,0 +1,73 @@
+#`rubocop` to run normally
+#`rubocop --auto-gen-config` to update .rubocop_todo.yml
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-minitest
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rake
+  - rubocop-thread_safety
+
+AllCops:
+  TargetRubyVersion: 3.1
+  TargetRailsVersion: 6.1
+  Exclude:
+    - 'db/**/*'
+    - 'node_modules/**/*'
+    - 'vendor/bundle/**/*'
+    - 'bin/*'
+  NewCops: enable
+Rails:
+  Enabled: true
+
+Layout/HashAlignment:
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
+Layout/LineLength:
+  AutoCorrect: true
+  Max: 80
+  # Ignore comments to ignore # == Schema Information,
+  AllowedPatterns: ['\A#']
+  Exclude:
+    - 'config/**/*'
+    - 'db/data/**/*'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'test/**/*'
+Metrics/BlockLength:
+  IgnoredMethods:
+    - 'included'
+    - 'with_options'
+  Exclude:
+    - 'config/**/*'
+    - 'test/**/*'
+Metrics/ClassLength:
+  Exclude:
+    - 'test/**/*'
+Metrics/MethodLength:
+  Exclude:
+    - 'test/**/*'
+
+Minitest/MultipleAssertions:
+  Enabled: false
+
+Naming/BlockForwarding:
+  EnforcedStyle: explicit
+Naming/MethodParameterName:
+  AllowedNames:
+    - id
+    - ip
+  Exclude:
+    - 'test/**/*'
+
+Style/BlockDelimiters:
+  Exclude:
+    - 'config/routes.rb'
+Style/Documentation:
+  Enabled: false
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
+Style/RaiseArgs:
+  EnforcedStyle: compact
