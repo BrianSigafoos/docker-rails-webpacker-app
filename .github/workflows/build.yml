@@ -27,7 +27,7 @@ jobs:
 
       # Required for cache-from and cache-to support
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
 
       # https://github.com/docker/login-action
       - name: Log in to GitHub Container Registry
