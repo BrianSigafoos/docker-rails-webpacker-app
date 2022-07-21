@@ -43,6 +43,16 @@ gem 'sidekiq-cron'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
+# Used in lint-job only and installed there.
+# gem 'bundler-audit', require: false
+# gem 'ruby_audit', require: false
+
+# Brakeman usage: `brakeman -o brakeman_report.txt`
+# For interactive brakeman that updates config/brakeman.ignore
+# gem update brakeman # Get latest
+# brakeman -I --skip-files /app/views/super/,/app/controllers/super/
+# gem 'brakeman', require: false
+
 group :development, :test do
   gem 'better_html'
   gem 'bullet'
@@ -54,6 +64,26 @@ group :development, :test do
   gem 'rubocop-rails',         require: false
   gem 'rubocop-rake',          require: false
   gem 'rubocop-thread_safety', require: false
+end
+
+group :development do
+  gem 'annotate'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'listen'
+  gem 'spring'
+
+  # Profiler for your development and production Ruby rack apps: https://github.com/MiniProfiler/rack-mini-profiler
+  # gem 'rack-mini-profiler'
+
+  # Flamegraph profiling support for Ruby 2.0 https://github.com/SamSaffron/flamegraph
+  # gem 'flamegraph'
+
+  # a sampling call-stack profiler for ruby 2.1+ https://github.com/tmm1/stackprof
+  # gem 'stackprof' # ruby 2.1+ only
+
+  # memory_profiler for ruby https://github.com/SamSaffron/memory_profiler
+  # gem 'memory_profiler'
 end
 
 group :test do
