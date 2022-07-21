@@ -9,8 +9,17 @@ module.exports = {
     './app/helpers/**/*.rb'
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: 'var(--color-primary)'
+      },
+    },
   },
   variants: {},
   plugins: [require('@tailwindcss/forms')],
+  corePlugins: {
+    // Disabled here and added with scope in _container.scss
+    container: false,
+    preflight: false
+  }
 }

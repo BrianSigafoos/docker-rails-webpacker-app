@@ -20,6 +20,9 @@ gem 'turbo-rails'
 gem 'view_component'
 gem 'webpacker', '6.0.0.rc.6'
 
+# For JS widgets
+gem 'rack-cors'
+
 gem 'sidekiq'
 gem 'sidekiq_alive'
 gem 'sidekiq-cron'

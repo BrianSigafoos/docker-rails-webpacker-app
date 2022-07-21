@@ -1,0 +1,5 @@
+<%# Write stylesheet %>
+document.write('<%= j(stylesheet_pack_tag('widget')) %>');
+
+<%# Writes HTML %>
+document.write('<%= j(render(Widgets::ItemComponent.new(item: @item))) %>');

@@ -1,0 +1,44 @@
+<% content_for :title, 'Embed' %>
+<% content_for :blank_head do %>
+  <style>
+    /* Our widget.css should not change the shape of the box */
+    .host-page-custom-css {
+      background-color: gray;
+      width: 50px;
+      height: 50px;
+    }
+  </style>
+<% end %>
+
+<div class="mt-8 mx-4">
+  <!-- Headings -->
+  <h1 class="title mb-4">
+    Embed our JS
+  </h1>
+
+  <h4 class="mb-4">
+    Check page CSS
+  </h4>
+  <div class="host-page-custom-css container">
+    <p>
+      50 x 50 box
+    </p>
+  </div>
+
+  <p>
+    Enter identifier with prefix for any item to preview embedding it.
+  </p>
+
+  <%= form_with url: '', html: { class: 'mb-8', method: :get } do %>
+    <%= text_field_tag :id, @item&.identifier, class: 'form-control', autocomplete: 'off' %>
+    <%= submit_tag 'Submit', class: 'ml-4' %>
+    <%= link_to 'Reset', embed_path, class: 'ml-4' %>
+  <% end %>
+
+  <%= render Widgets::EmbedCodeComponent.new(item: @item) %>
+
+  <h4 class="mb-4">
+    Rendered
+  </h4>
+  <%= render Widgets::EmbedCodeSnippetComponent.new(item: @item) %>
+</div>

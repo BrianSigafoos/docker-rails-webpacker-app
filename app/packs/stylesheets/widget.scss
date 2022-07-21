@@ -9,13 +9,16 @@
 //   https://github.com/tailwindlabs/tailwindcss/blob/master/src/css/preflight.css
 @import 'preflight';
 
-// Tailwind standard
+// // Tailwind standard
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 // CSS Variables for color
-@import 'widget/color_variables';
+@import 'widget/color_variables'; // scoped
+
+// Custom CSS to style widget itself and links
+@import 'widget/custom';
 
 @import 'colors_base';
 @import 'container'; // scoped
