@@ -22,6 +22,10 @@ development:
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:
     https: false
+    # See .env for Docker to work, we override `host:` by using an env var
+    # WEBPACKER_DEV_SERVER_HOST=webpacker
+    # _and_ when calling the dev server
+    # WEBPACKER_DEV_SERVER_HOST=webpacker ./bin/webpack-dev-server
     host: localhost
     port: 3035
     public: localhost:3035
