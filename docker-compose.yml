@@ -10,7 +10,7 @@ x-app: &app
     # Change these to test a newwer version and then update in Dockerfile
     # which has these as defaults
     # args:
-      # RUBY_VERSION: '3.0.2'
+      # RUBY_VERSION: '3.1.2'
       # POSTGRES_MAJOR_VERSION: '13'
       # NODEJS_MAJOR_VERSION: '16'
       # YARN_VERSION: '1.22.11'
