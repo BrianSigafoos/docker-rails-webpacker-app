@@ -1,5 +1,5 @@
 # Versions with defaults. Override with env var to build a different version.
-ARG RUBY_VERSION=3.0.2
+ARG RUBY_VERSION=3.1.2
 ARG POSTGRES_MAJOR_VERSION=13
 ARG NODEJS_MAJOR_VERSION=16
 ARG BUNDLER_VERSION=2.2.27
