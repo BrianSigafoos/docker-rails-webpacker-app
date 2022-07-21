@@ -29,9 +29,8 @@ module Widgets
     end
 
     def widget_src_prefix
-      return 'http://localhost:3000' if Rails.env.development?
-
-      ''
+      "#{ENV.fetch('DEFAULT_URL_OPTS_PROTOCOL')}" \
+        "#{ENV.fetch('DEFAULT_URL_OPTS_HOST')}"
     end
 
     def seo_footer

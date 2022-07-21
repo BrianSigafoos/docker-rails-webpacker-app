@@ -46,6 +46,8 @@ gem 'sidekiq-cron'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
+gem 'dotenv-rails'
+
 # Used in lint-job only and installed there.
 # gem 'bundler-audit', require: false
 # gem 'ruby_audit', require: false
