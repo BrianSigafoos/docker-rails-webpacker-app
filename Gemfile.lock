@@ -182,7 +182,7 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     thor (1.2.1)
-    turbo-rails (7.1.1)
+    turbo-rails (1.1.1)
       rails (>= 6.0.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
