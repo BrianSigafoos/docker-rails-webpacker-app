@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -13,14 +15,14 @@ gem 'pg'
 # instead so only using turbo-rails
 gem 'turbo-rails'
 gem 'view_component', require: 'view_component/engine'
-gem 'webpacker', '6.0.0.beta.7'
+gem 'webpacker', '6.0.0.rc.6'
 
 # Use Puma as the app server
 gem 'puma'
 
 gem 'sidekiq'
 gem 'sidekiq_alive'
-gem 'sidekiq-cron' 
+gem 'sidekiq-cron'
 
 # Use SCSS for stylesheets
 # gem 'sass-rails', '>= 6'
@@ -41,20 +43,47 @@ gem 'sidekiq-cron'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
+# Used in lint-job only and installed there.
+# gem 'bundler-audit', require: false
+# gem 'ruby_audit', require: false
+
+# Brakeman usage: `brakeman -o brakeman_report.txt`
+# For interactive brakeman that updates config/brakeman.ignore
+# gem update brakeman # Get latest
+# brakeman -I --skip-files /app/views/super/,/app/controllers/super/
+# gem 'brakeman', require: false
+
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'better_html'
+  gem 'bullet'
+  gem 'erb_lint', require: false
+  gem 'pry'
+  gem 'rubocop',               require: false
+  gem 'rubocop-minitest',      require: false
+  gem 'rubocop-performance',   require: false
+  gem 'rubocop-rails',         require: false
+  gem 'rubocop-rake',          require: false
+  gem 'rubocop-thread_safety', require: false
 end
 
 group :development do
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 4.1.0'
-  # Display performance information such as SQL time and flame graphs for each request in your browser.
-  # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
-  gem 'rack-mini-profiler', '~> 2.3'
-  gem 'listen', '~> 3.7'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'annotate'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'listen'
   gem 'spring'
+
+  # Profiler for your development and production Ruby rack apps: https://github.com/MiniProfiler/rack-mini-profiler
+  # gem 'rack-mini-profiler'
+
+  # Flamegraph profiling support for Ruby 2.0 https://github.com/SamSaffron/flamegraph
+  # gem 'flamegraph'
+
+  # a sampling call-stack profiler for ruby 2.1+ https://github.com/tmm1/stackprof
+  # gem 'stackprof' # ruby 2.1+ only
+
+  # memory_profiler for ruby https://github.com/SamSaffron/memory_profiler
+  # gem 'memory_profiler'
 end
 
 group :test do
@@ -66,4 +95,4 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

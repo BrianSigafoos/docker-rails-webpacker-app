@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class HealthChecksController < ActionController::Base
+class HealthChecksController < ApplicationController
   def show
     # TODO: check db and redis. See https://github.com/ianheggie/health_check
     head :ok
