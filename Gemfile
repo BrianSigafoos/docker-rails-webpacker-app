@@ -8,17 +8,17 @@ gem 'rails', '~> 6.1'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+# Use Puma as the app server
+gem 'puma'
+
 # Frontend powered by Hotwire (Turbo + Stimulus) withTailwindCSS
 # both Stimulus and Tailwind and dependencies in package.json
 # gem 'hotwire-rails'
 # hotwire-rails includes stimulus-rails for asset pipeline usage, we use webpacker
 # instead so only using turbo-rails
 gem 'turbo-rails'
-gem 'view_component', require: 'view_component/engine'
+gem 'view_component'
 gem 'webpacker', '6.0.0.rc.6'
-
-# Use Puma as the app server
-gem 'puma'
 
 gem 'sidekiq'
 gem 'sidekiq_alive'
@@ -52,6 +52,17 @@ gem 'bootsnap', require: false
 # gem update brakeman # Get latest
 # brakeman -I --skip-files /app/views/super/,/app/controllers/super/
 # gem 'brakeman', require: false
+
+# Needed during Ruby 3.1 upgrade, using Rails 6.1.5
+# https://qiita.com/jnchito/items/4ef331281f0050428716#%E5%8E%9F%E5%9B%A0%E3%81%A8%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95
+# Ruby 3.1 release notes:
+# https://www.ruby-lang.org/en/news/2021/12/25/ruby-3-1-0-released/
+# gem 'debug'
+# gem 'matrix'
+# gem 'net-imap'
+# gem 'net-pop'
+# gem 'net-smtp'
+# gem 'prime'
 
 group :development, :test do
   gem 'better_html'
