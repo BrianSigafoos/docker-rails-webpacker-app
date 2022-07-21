@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -20,7 +22,7 @@ gem 'puma'
 
 gem 'sidekiq'
 gem 'sidekiq_alive'
-gem 'sidekiq-cron' 
+gem 'sidekiq-cron'
 
 # Use SCSS for stylesheets
 # gem 'sass-rails', '>= 6'
@@ -42,19 +44,16 @@ gem 'sidekiq-cron'
 gem 'bootsnap', require: false
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-end
-
-group :development do
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 4.1.0'
-  # Display performance information such as SQL time and flame graphs for each request in your browser.
-  # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
-  gem 'rack-mini-profiler', '~> 3.0'
-  gem 'listen', '~> 3.7'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'better_html'
+  gem 'bullet'
+  gem 'erb_lint', require: false
+  gem 'pry'
+  gem 'rubocop',               require: false
+  gem 'rubocop-minitest',      require: false
+  gem 'rubocop-performance',   require: false
+  gem 'rubocop-rails',         require: false
+  gem 'rubocop-rake',          require: false
+  gem 'rubocop-thread_safety', require: false
 end
 
 group :test do
@@ -66,4 +65,4 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
