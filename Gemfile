@@ -61,11 +61,11 @@ gem 'bootsnap', require: false
 # Ruby 3.1 release notes:
 # https://www.ruby-lang.org/en/news/2021/12/25/ruby-3-1-0-released/
 # gem 'debug'
-# gem 'matrix'
-# gem 'net-imap'
-# gem 'net-pop'
-# gem 'net-smtp'
-# gem 'prime'
+gem 'matrix'
+gem 'net-imap'
+gem 'net-pop'
+gem 'net-smtp'
+gem 'prime'
 
 group :development, :test do
   gem 'better_html'

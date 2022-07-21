@@ -37,9 +37,7 @@ module Widgets
     def seo_footer
       tag.p do
         concat('Widget created with ')
-        concat(
-          link_to(SEO_LINK_TXT, SEO_LINK_URL, target: :_blank, rel: :noopener)
-        )
+        concat(link_to(SEO_LINK_TXT, SEO_LINK_URL))
         concat(' by Brian')
       end
     end
