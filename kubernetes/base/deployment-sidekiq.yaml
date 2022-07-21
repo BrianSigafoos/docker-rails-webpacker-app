@@ -104,7 +104,7 @@ spec:
             preStop:
               exec:
                 # SIGTERM triggers a quick exit; gracefully terminate instead
-                command: ['kubernetes/scripts/sidekiq_quiet']
+                command: ['scripts/sidekiq_quiet']
 
           volumeMounts:
             # Since the container file system is read-only,
