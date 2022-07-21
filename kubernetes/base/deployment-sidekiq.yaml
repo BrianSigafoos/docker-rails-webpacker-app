@@ -58,6 +58,12 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            # Make $APP_REVISION available in the container/app to see current
+            # deployed SHA version.
+            - name: APP_REVISION
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['revision_sha']
             # Puma is used by sidekiq_alive gem for probes
             # Puma expects this to be in tmp/pids/server.pid by default. But,
             # instead of mounting the writable /app/tmp directory, and creating
@@ -98,7 +104,7 @@ spec:
             preStop:
               exec:
                 # SIGTERM triggers a quick exit; gracefully terminate instead
-                command: ['kubernetes/scripts/sidekiq_quiet']
+                command: ['scripts/sidekiq_quiet']
 
           volumeMounts:
             # Since the container file system is read-only,
@@ -110,7 +116,7 @@ spec:
       # Ruby's Dir.tmpdir won't allow us to use the mounted folder /app/tmp
       # for Tempfile.new. This initContainer creates a new /tmp folder inside
       # the mounted folder that will have the correct folder permission.
-      # https://ruby-doc.org/stdlib-3.0.2/libdoc/tmpdir/rdoc/Dir.html
+      # https://ruby-doc.org/stdlib-3.1.2/libdoc/tmpdir/rdoc/Dir.html
       initContainers:
         - name: make-tempfile-directory
           image: busybox:1.33
