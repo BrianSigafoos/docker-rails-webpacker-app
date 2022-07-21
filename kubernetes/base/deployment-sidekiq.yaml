@@ -58,6 +58,12 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            # Make $APP_REVISION available in the container/app to see current
+            # deployed SHA version.
+            - name: APP_REVISION
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['revision_sha']
             # Puma is used by sidekiq_alive gem for probes
             # Puma expects this to be in tmp/pids/server.pid by default. But,
             # instead of mounting the writable /app/tmp directory, and creating
