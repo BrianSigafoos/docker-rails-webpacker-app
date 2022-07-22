@@ -5,8 +5,18 @@ module Widgets
     layout 'blank'
 
     def show
-      @item = Struct.new(:identifier)
-                    .new(SecureRandom.base58(6))
+      @item = item
+    end
+
+    private
+
+    def item
+      @item ||= Post.find_by(identifier: params_id)
+    end
+
+    # Fall back to first
+    def params_id
+      params[:id].presence || Post.first.identifier
     end
   end
 end

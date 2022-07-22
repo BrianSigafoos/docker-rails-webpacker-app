@@ -26,11 +26,8 @@ module Widgets
       render_error(404)
     end
 
-    # TODO: replace with DB call + local seeds
     def item
-      Struct.new(:title, :description)
-            .new('Work With Us ',
-                 'Our Process 👋')
+      @item ||= Post.find_by(identifier: params[:id])
     end
   end
 end

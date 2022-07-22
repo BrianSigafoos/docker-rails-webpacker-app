@@ -1,0 +1,11 @@
+DEFAULTS: &DEFAULTS
+  title: $LABEL
+  body:  "## Hi! Here's a [a link](/)"
+
+one:
+  <<: *DEFAULTS
+  identifier: <%= SecureRandom.base58(6) %>
+
+two:
+  <<: *DEFAULTS
+  identifier: <%= SecureRandom.base58(6) %>
