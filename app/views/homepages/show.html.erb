@@ -6,9 +6,8 @@
     <div class="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
       <div>
         <div>
-          <img class="h-11 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
-            alt="Workflow">
+          <%= render partial: 'svg/ui/logo_icon',
+                     locals:  { height: 36, width: 36, cls: 'text-primary flex-shrink-0' } %>
         </div>
 
         <div class="mt-20">
