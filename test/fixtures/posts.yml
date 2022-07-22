@@ -1,6 +1,5 @@
 DEFAULTS: &DEFAULTS
   title: $LABEL
-  body:  "## Hi! Here's a [a link](/)"
 
 one:
   <<: *DEFAULTS
