@@ -1,0 +1,10 @@
+DEFAULTS: &DEFAULTS
+  title: $LABEL
+
+one:
+  <<: *DEFAULTS
+  identifier: <%= SecureRandom.base58(6) %>
+
+two:
+  <<: *DEFAULTS
+  identifier: <%= SecureRandom.base58(6) %>
