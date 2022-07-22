@@ -1,21 +1,23 @@
-<div class="bg-white pb-8 sm:pb-12 lg:pb-12">
+<% content_for :title, 'Home - Demo by Brian' %>
+
+<div class="bg-bright pb-8 sm:pb-12 lg:pb-12">
   <div class="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-48">
-    <div
-      class="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
+    <!-- Top / Left Side -->
+    <div class="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
       <div>
         <div>
           <img class="h-11 w-auto"
             src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
             alt="Workflow">
         </div>
+
         <div class="mt-20">
           <div>
             <a href="<%= embed_path %>" class="inline-flex space-x-4">
               <span
-                class="rounded bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 tracking-wide uppercase">
+                class="rounded bg-gray px-2.5 py-1 text-xs font-semibold text-primary tracking-wide uppercase">
                 What's new </span>
-              <span
-                class="inline-flex items-center text-sm font-medium text-indigo-600 space-x-1">
+              <span class="inline-flex items-center text-sm font-medium text-primary text-primary-hover space-x-1">
                 <span>Embed a JS Widget example</span>
                 <!-- Heroicon name: solid/chevron-right -->
                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg"
@@ -29,10 +31,10 @@
           </div>
           <div class="mt-6 sm:max-w-xl">
             <h1
-              class="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
-              Demo App by Brian
+              class="text-4xl font-extrabold text-bright tracking-tight sm:text-5xl">
+              Demo App by <span class="text-primary">Brian</span>
             </h1>
-            <p class="mt-6 text-xl text-gray-500">
+            <p class="mt-6 text-xl text-muted">
               A demo of a Docker-ized Rails app with Kubernetes, Tailwind CSS, and Webpacker
             </p>
           </div>
@@ -40,18 +42,21 @@
             <div class="min-w-0 flex-1">
               <label for="hero-email" class="sr-only">Email address</label>
               <input id="hero-email" type="email"
-                class="block w-full border border-gray-300 rounded-md px-5 py-3 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                placeholder="Enter your email">
+                class="form-input block w-full border border-grayest rounded-md px-5 py-3 text-base bg-bright text-bright shadow-sm focus-ring-primary"
+                placeholder="Enter your email"
+                autocomplete="off">
             </div>
             <div class="mt-4 sm:mt-0 sm:ml-3">
               <button type="submit" disabled="disabled"
-                class="block w-full rounded-md border border-transparent px-5 py-3 bg-indigo-600 text-base font-medium text-white shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:px-10">
+                class="block w-full rounded-md border border-transparent px-5 py-3 bg-primary text-base font-medium text-on-color-primary shadow hover:bg-primary-dark focus:outline-none focus:ring-2 focus:bg-primary-dark focus:ring-offset-2 sm:px-10">
                 Just Kidding
               </button>
             </div>
           </form>
+
+          <!-- Ratings -->
           <div class="mt-6">
-            <div class="inline-flex items-center divide-x divide-gray-300">
+            <div class="inline-flex items-center divide-x divide-gray-500">
               <div class="flex-shrink-0 flex pr-5">
                 <!-- Heroicon name: solid/star -->
                 <svg class="h-5 w-5 text-yellow-400"
@@ -89,34 +94,39 @@
                     d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
               </div>
-              <div
-                class="min-w-0 flex-1 pl-5 py-1 text-sm text-gray-500 sm:py-3">
-                <span class="font-medium text-gray-900">
+              <div class="min-w-0 flex-1 pl-5 py-1 text-sm text-muted sm:py-3">
+                <span class="font-medium text-color">
                   Rated 5 stars
                 </span>
                 by
-                <span class="font-medium text-indigo-600">
+                <span class="font-medium text-primary">
                   my family and friends 😀
-                </span></div>
+                </span>
+              </div>
             </div>
+          </div>
+
+          <div class="py-12 flex space-x-6 text-faint">
+            <%= render ToggleColorButtonsComponent.new %>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Bottom / Right Image -->
     <div class="sm:mx-auto sm:max-w-3xl sm:px-6">
       <div
         class="py-12 sm:relative sm:mt-12 sm:py-16 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
         <div class="hidden sm:block">
           <div
-            class="absolute inset-y-0 left-1/2 w-screen bg-gray-50 rounded-l-3xl lg:left-80 lg:right-0 lg:w-full">
+            class="absolute inset-y-0 left-1/2 w-screen bg-gray rounded-l-3xl lg:left-80 lg:right-0 lg:w-full">
           </div>
           <svg class="absolute top-8 right-1/2 -mr-3 lg:m-0 lg:left-0"
             width="404" height="392" fill="none" viewBox="0 0 404 392">
             <defs>
               <pattern id="837c3e70-6c3a-44e6-8854-cc48c737b659" x="0" y="0"
                 width="20" height="20" patternUnits="userSpaceOnUse">
-                <rect x="0" y="0" width="4" height="4" class="text-gray-200"
+                <rect x="0" y="0" width="4" height="4" class="text-faint"
                   fill="currentColor" />
               </pattern>
             </defs>

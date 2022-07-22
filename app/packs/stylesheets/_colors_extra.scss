@@ -1,0 +1,21 @@
+@layer components {
+  :where(.demoapp) {
+    .text-on-color-primary {
+      color: var(--text-on-color-primary);
+    }
+
+    .focus-ring-primary:focus {
+      @apply outline-none ring-2;
+
+      --tw-ring-opacity: 1;
+      --tw-ring-color: var(--color-primary);
+      --tw-ring-offset-color: var(--bg-bright);
+    }
+
+    .form-input:focus {
+      @apply border-primary;
+
+      box-shadow: 0 0 0 1px var(--color-primary-outline);
+    }
+  }
+}

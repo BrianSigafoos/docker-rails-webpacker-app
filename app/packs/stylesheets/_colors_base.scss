@@ -16,7 +16,10 @@
   }
 
   .text-primary-hover {
-    color: var(--color-primary-hover);
+    &:hover,
+    &:focus {
+      color: var(--color-primary-hover);
+    }
   }
 
   .bg-bright {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>DockerDemoApp</title>
+    <title><%= yield(:title) || 'Demo App' %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -10,7 +10,7 @@
     <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload', defer: true, nonce: true %>
   </head>
 
-  <body class="demoapp">
+  <body data-controller="color-scheme" class="demoapp">
     <%= yield %>
   </body>
 </html>

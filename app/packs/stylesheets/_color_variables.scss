@@ -148,35 +148,10 @@ body[data-color-primary='teal'] {
   --color-primary-dark: #008ba3;
 }
 
-body[data-color-primary='blue'] {
-  --color-primary: #2196f3; // rgb(33, 150, 243)
-  --color-primary-outline: rgba(33, 150, 243, 0.5);
-  --color-primary-faint: rgba(33, 150, 243, 0.1);
-  --color-primary-light: #6ec6ff;
-  --color-primary-dark: #0069c0;
-}
-
-body[data-color-primary='purple'] {
-  --color-primary: #8e24aa; // rgb(142, 36, 170)
-  --color-primary-outline: rgba(142, 36, 170, 0.5);
-  --color-primary-faint: rgba(142, 36, 170, 0.1);
-  --color-primary-light: #c158dc;
-  --color-primary-dark: #5c007a;
-}
-
 body[data-color-primary='pink'] {
   --color-primary: #ec407a; // rgb(236, 64, 122)
   --color-primary-outline: rgba(236, 64, 122, 0.5);
   --color-primary-faint: rgba(236, 64, 122, 0.1);
   --color-primary-light: #ff77a9;
   --color-primary-dark: #b4004e;
-}
-
-// https://material.io/resources/color/#!/?view.left=0&view.right=1&primary.color=ff4444
-body[data-color-primary='red'] {
-  --color-primary: #f44; // rgb(255, 68, 68, 1)
-  --color-primary-outline: rgba(255, 68, 68, 0.5);
-  --color-primary-faint: rgba(255, 68, 68, 0.1);
-  --color-primary-light: #ff7b70;
-  --color-primary-dark: #c4001c;
 }
