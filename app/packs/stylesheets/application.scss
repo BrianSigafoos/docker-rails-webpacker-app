@@ -15,7 +15,8 @@
 @tailwind utilities;
 
 // CSS Variables for color
-@import 'widget/color_variables';
+@import 'color_variables';
 
 @import 'colors_base';
+@import 'colors_extra'; // scoped
 @import 'container'; // scoped

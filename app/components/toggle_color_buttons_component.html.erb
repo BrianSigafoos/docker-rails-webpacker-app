@@ -1,0 +1,25 @@
+<button type="button" data-action="color-scheme#toggleScheme"
+  aria-label="Toggle dark mode" title="Toggle dark mode"
+  class="<%= cls %> hover:text-bright flex items-center truncate <%= 'rounded-md focus-ring-primary' if focus_ring %>">
+
+  <%= render partial: 'svg/ui/moon', locals: { size: icon_size } %>
+
+  <% if show_labels %>
+    <span class="ml-3 truncate">
+      Toggle dark mode
+    </span>
+  <% end %>
+</button>
+
+<button type="button" data-action="color-scheme#toggleColor"
+  aria-label="Change primary color" title="Change primary color"
+  class="<%= cls %> flex items-center truncate <%= 'rounded-md focus-ring-primary' if focus_ring %> <%= 'text-primary text-primary-hover' if color_primary %>">
+
+  <%= render partial: 'svg/ui/color_swatch', locals: { size: icon_size } %>
+
+  <% if show_labels %>
+    <span class="ml-3 truncate">
+      Change primary color
+    </span>
+  <% end %>
+</button>
