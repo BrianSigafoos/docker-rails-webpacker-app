@@ -20,6 +20,9 @@ gem 'turbo-rails'
 gem 'view_component'
 gem 'webpacker', '6.0.0.rc.6'
 
+# For JS widgets
+gem 'rack-cors'
+
 gem 'sidekiq'
 gem 'sidekiq_alive'
 gem 'sidekiq-cron'
@@ -43,6 +46,8 @@ gem 'sidekiq-cron'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
+gem 'dotenv-rails'
+
 # Used in lint-job only and installed there.
 # gem 'bundler-audit', require: false
 # gem 'ruby_audit', require: false
@@ -58,11 +63,11 @@ gem 'bootsnap', require: false
 # Ruby 3.1 release notes:
 # https://www.ruby-lang.org/en/news/2021/12/25/ruby-3-1-0-released/
 # gem 'debug'
-# gem 'matrix'
-# gem 'net-imap'
-# gem 'net-pop'
-# gem 'net-smtp'
-# gem 'prime'
+gem 'matrix'
+gem 'net-imap'
+gem 'net-pop'
+gem 'net-smtp'
+gem 'prime'
 
 group :development, :test do
   gem 'better_html'

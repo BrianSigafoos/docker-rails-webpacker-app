@@ -33,6 +33,9 @@ Layout/LineLength:
     - 'config/**/*'
     - 'db/data/**/*'
 
+Lint/MissingSuper:
+  Enabled: false
+  
 Metrics/AbcSize:
   Exclude:
     - 'test/**/*'

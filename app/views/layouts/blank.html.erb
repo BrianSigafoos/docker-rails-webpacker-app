@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title><%= yield(:title) || 'Demo App' %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= yield :blank_head -%>
+</head>
+
+<body>
+  <%= yield %>
+</body>
+</html>

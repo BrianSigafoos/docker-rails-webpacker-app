@@ -1,0 +1,35 @@
+// For widget itself
+.demoapp-widget {
+  @apply text-color bg-gray max-w-4xl rounded-md p-6 text-base leading-normal antialiased;
+
+  p {
+    @apply mb-0 text-base;
+  }
+
+  // Try to keep font family as sans-serif
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  a,
+  button {
+    @apply font-sans;
+  }
+
+  ul,
+  ol {
+    @apply text-base;
+  }
+
+  // Style for the first child p inside the widget only
+  > p {
+    @apply text-muted text-right text-xs;
+
+    a {
+      @apply font-semibold;
+    }
+  }
+}

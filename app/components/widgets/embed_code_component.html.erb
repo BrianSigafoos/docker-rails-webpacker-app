@@ -1,0 +1,15 @@
+<!-- Embed -->
+<div class="mt-4 sm:mt-6 pb-16">
+  <h4 class="title mb-8">
+    Embed
+  </h4>
+
+  <%# NOTE: added extra space after html_escape("<...> ") to make erb_lint happy. %>
+  <pre class="select-all shadow-inner bg-grayer text-sm leading-6 mb-2 p-5 rounded-lg text-bright whitespace-pre-line">
+    <code><%= html_escape("#{render Widgets::EmbedCodeSnippetComponent.new(item: item)} ") %></code>
+  </pre>
+
+  <p class="help-text">
+    Copy and paste this HTML into your website or blog.
+  </p>
+</div>

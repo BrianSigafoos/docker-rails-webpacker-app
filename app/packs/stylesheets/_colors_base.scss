@@ -1,0 +1,45 @@
+@layer components {
+  .text-color {
+    color: var(--text-color);
+  }
+
+  .text-bright {
+    color: var(--text-bright);
+  }
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+
+  .text-faint {
+    color: var(--text-faint);
+  }
+
+  .text-primary-hover {
+    color: var(--color-primary-hover);
+  }
+
+  .bg-bright {
+    background-color: var(--bg-bright);
+  }
+
+  .bg-gray {
+    background-color: var(--bg-gray);
+  }
+
+  .bg-grayer {
+    background-color: var(--bg-grayer);
+  }
+
+  .bg-grayest {
+    background-color: var(--bg-grayest);
+  }
+
+  .bg-primary-dark {
+    background-color: var(--color-primary-dark);
+  }
+
+  .border-grayer {
+    border-color: var(--border-grayer);
+  }
+}

@@ -1,0 +1,42 @@
+// This simply re-created the Tailwind default .container class, but scoped to
+// .demoapp so that when using widgets, we don't impact a widget host
+// page's CSS.
+//
+// Disabled in tailwind.config.js: `corePlugins: { container: false, ... }`
+@layer components {
+  :where(.demoapp) {
+    .container {
+      @apply mx-auto w-full px-6;
+    }
+
+    @screen sm {
+      .container {
+        max-width: 640px;
+      }
+    }
+
+    @screen md {
+      .container {
+        max-width: 768px;
+      }
+    }
+
+    @screen lg {
+      .container {
+        max-width: 1024px;
+      }
+    }
+
+    @screen xl {
+      .container {
+        max-width: 1280px;
+      }
+    }
+
+    @screen 2xl {
+      .container {
+        max-width: 1536px;
+      }
+    }
+  }
+}

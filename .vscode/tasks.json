@@ -220,6 +220,30 @@
       "presentation": {
         "reveal": "always"
       }
-    }
+    },
+    {
+      "label": "rails test",
+      "type": "shell",
+      "command": "bundle exec rails test",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "test file",
+      "type": "shell",
+      "command": "bundle exec rails test ${relativeFile}",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
   ]
 }

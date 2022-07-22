@@ -1,0 +1,182 @@
+// Colors via Material Design: https://material.io/design/color/#tools-for-picking-colors
+// https://material.io/resources/color/#!/?view.left=0&view.right=1&primary.color=17bf63
+
+// To create more shades of gray for dark theme we take gray-900 and adjust
+// the Lightness in HSL (use Chrome) up and down percentage points as seen below.
+// gray-800 #2d3748; hsl(218, 23%, 23%) -- via Tailwind
+// gray-830 #262f40; hsl(220, 26%, 20%)
+// gray-870 #202837; hsl(220, 26%, 17%)
+// gray-900 #1a202c; hsl(220, 26%, 14%) -- via Tailwind
+// gray-930 #131720; hsl(220, 26%, 10%)
+// gray-970 #0b0e13; hsl(220, 26%, 6%)
+
+// Default colors
+:root {
+  --color-primary: #17bf63; // rgb(23, 191, 99, 1)
+  --color-primary-outline: rgba(23, 191, 99, 0.5);
+  --color-primary-faint: rgba(23, 191, 99, 0.1);
+  --color-primary-light: #61f392;
+  --color-primary-dark: #008d36;
+  --color-primary-hover: var(--color-primary-dark);
+  --text-on-color-primary: #fff; // Color for text on primary btn and bg
+
+  // Light is default
+  --bg-bright: #fff; // bg-white
+  --bg-gray: #f7fafc; // gray-100
+  --bg-grayer: #edf2f7; // gray-200
+  --bg-grayest: #e2e8f0; // gray-300
+  --border-gray: #edf2f7; // gray-200
+  --border-grayer: #e2e8f0; // gray-300
+  --text-bright: #1a202c; // gray-900
+  --text-color: #4a5568; // gray-700
+  --text-muted: #718096; // gray-600 -- Same for light/dark
+  --text-faint: #a0aec0; // gray-500
+  --shadow-color-a: rgba(0, 0, 0, 0.1);
+  --shadow-color-b: rgba(0, 0, 0, 0.06);
+  --bg-error: #fff5f5; // red-100
+  --bg-warning: #ffffe5; // yellow-100, adjusted HSL's L down to 95%
+  --bg-info: #ebf8ff; // blue-100
+  --bg-success: #f0fff4; // green-100
+  --text-error: #e53e3e; // red-600
+  --text-warning: #b7791f; // yellow-700
+  --text-info: #3182ce; // blue-600
+  --text-success: #38a169; // green-600
+
+  // Dark if preferred at OS level by user
+  @media (prefers-color-scheme: dark) {
+    --color-primary-hover: var(--color-primary-light);
+    --bg-bright: #1a202c; // gray-900
+    --bg-gray: #131720; // bg-gray-930
+    --bg-grayer: #0b0e13; // bg-gray-970
+    --bg-grayest: #000; // bg-black
+    --border-gray: #202837; // gray-870
+    --border-grayer: #262f40; // gray-830
+    --text-bright: #edf2f7; // gray-200
+    --text-color: #a0aec0; // gray-500
+    // --text-muted: #718096; // gray-600
+    --text-faint: #4a5568; // gray-700
+    --shadow-color-a: rgba(0, 0, 0, 0.2);
+    --shadow-color-b: rgba(0, 0, 0, 0.12);
+    --bg-error: #311212; // red-900, adjusted HSL's L to 13%
+    --bg-warning: #361f07; // yellow-900, adjusted HSL's L to 12%
+    --bg-info: #172436; // blue-900, adjusted HSL's L to 15%
+    --bg-success: #132f22; // green-900, adjusted HSL's L to 13%
+    --text-error: #f56565; // red-500
+    --text-warning: #ecc94b; // yellow-500
+    --text-info: #63b3ed; // blue-400
+    --text-success: #68d391; // green-400
+  }
+}
+
+body[data-color-scheme='light'] {
+  --color-primary-hover: var(--color-primary-dark);
+  --bg-bright: #fff; // bg-white
+  --bg-gray: #f7fafc; // gray-100
+  --bg-grayer: #edf2f7; // gray-200
+  --bg-grayest: #e2e8f0; // gray-300
+  --border-gray: #edf2f7; // gray-200
+  --border-grayer: #e2e8f0; // gray-300
+  --text-bright: #1a202c; // gray-900
+  --text-color: #4a5568; // gray-700
+  // --text-muted: #718096; // gray-600
+  --text-faint: #a0aec0; // gray-500
+  --shadow-color-a: rgba(0, 0, 0, 0.1);
+  --shadow-color-b: rgba(0, 0, 0, 0.06);
+  --bg-error: #fff5f5; // red-100
+  --bg-warning: #ffffe5; // yellow-100, adjusted HSL's L down to 95%
+  --bg-info: #ebf8ff; // blue-100
+  --bg-success: #f0fff4; // green-100
+  --text-error: #e53e3e; // red-600
+  --text-warning: #b7791f; // yellow-700
+  --text-info: #3182ce; // blue-600
+  --text-success: #38a169; // green-600
+}
+
+body[data-color-scheme='dark'] {
+  --color-primary-hover: var(--color-primary-light);
+  --bg-bright: #1a202c; // gray-900
+  --bg-gray: #131720; // bg-gray-930
+  --bg-grayer: #0b0e13; // bg-gray-970
+  --bg-grayest: #000; // bg-black
+  --text-bright: #edf2f7; // gray-200
+  --text-color: #a0aec0; // gray-500
+  // --text-muted: #718096; // gray-600
+  --text-faint: #4a5568; // gray-700
+  --border-gray: #202837; // gray-870
+  --border-grayer: #262f40; // gray-830
+  --shadow-color-a: rgba(0, 0, 0, 0.2);
+  --shadow-color-b: rgba(0, 0, 0, 0.12);
+  --bg-error: #311212; // red-900, adjusted HSL's L to 13%
+  --bg-warning: #361f07; // yellow-900, adjusted HSL's L to 12%
+  --bg-info: #172436; // blue-900, adjusted HSL's L to 15%
+  --bg-success: #132f22; // green-900, adjusted HSL's L to 13%
+  --text-error: #f56565; // red-500
+  --text-warning: #ecc94b; // yellow-500
+  --text-info: #63b3ed; // blue-400
+  --text-success: #68d391; // green-400
+}
+
+// Note: that Color Scheme Dark above isn't full black so that we can show depth
+// with darker colors. See bg-gray and bg-grayer, both are darker.
+// https://www.w3schools.com/colors/colors_picker.asp
+
+// Previous "dark" color scheme used bg-black as base. Future option,
+// add "black out" or "lights out" theme similar to Twitter.
+// Note: this feels slightly less natural because depth is inverted.
+// body[data-color-scheme='black'] {
+//   --bg-bright: #000; // bg-black
+//   --bg-gray: #1a202c; // bg-gray-900
+//   --bg-grayer: #4b4b4b;
+//   --bg-grayest: #4a5568;
+// }
+
+// Primary color changer
+//
+// Commented out because this is the default currently.
+// body[data-color-primary='green'] {
+//   --color-primary: #17bf63; // rgb(23, 191, 99, 1)
+//   --color-primary-outline: rgba(23, 191, 99, 0.5);
+//   --color-primary-light: #61f392;
+//   --color-primary-dark: #008d36;
+// }
+
+body[data-color-primary='teal'] {
+  --color-primary: #00bcd4; // rgb(0, 187, 211)
+  --color-primary-outline: rgba(0, 187, 211, 0.5);
+  --color-primary-faint: rgba(0, 187, 211, 0.1);
+  --color-primary-light: #62efff;
+  --color-primary-dark: #008ba3;
+}
+
+body[data-color-primary='blue'] {
+  --color-primary: #2196f3; // rgb(33, 150, 243)
+  --color-primary-outline: rgba(33, 150, 243, 0.5);
+  --color-primary-faint: rgba(33, 150, 243, 0.1);
+  --color-primary-light: #6ec6ff;
+  --color-primary-dark: #0069c0;
+}
+
+body[data-color-primary='purple'] {
+  --color-primary: #8e24aa; // rgb(142, 36, 170)
+  --color-primary-outline: rgba(142, 36, 170, 0.5);
+  --color-primary-faint: rgba(142, 36, 170, 0.1);
+  --color-primary-light: #c158dc;
+  --color-primary-dark: #5c007a;
+}
+
+body[data-color-primary='pink'] {
+  --color-primary: #ec407a; // rgb(236, 64, 122)
+  --color-primary-outline: rgba(236, 64, 122, 0.5);
+  --color-primary-faint: rgba(236, 64, 122, 0.1);
+  --color-primary-light: #ff77a9;
+  --color-primary-dark: #b4004e;
+}
+
+// https://material.io/resources/color/#!/?view.left=0&view.right=1&primary.color=ff4444
+body[data-color-primary='red'] {
+  --color-primary: #f44; // rgb(255, 68, 68, 1)
+  --color-primary-outline: rgba(255, 68, 68, 0.5);
+  --color-primary-faint: rgba(255, 68, 68, 0.1);
+  --color-primary-light: #ff7b70;
+  --color-primary-dark: #c4001c;
+}

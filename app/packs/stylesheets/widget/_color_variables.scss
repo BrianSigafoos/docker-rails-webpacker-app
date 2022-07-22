@@ -1,0 +1,69 @@
+// Colors via Material Design: https://material.io/design/color/#tools-for-picking-colors
+// https://material.io/resources/color/#!/?view.left=0&view.right=1&primary.color=17bf63
+
+// To create more shades of gray for dark theme we take gray-900 and adjust
+// the Lightness in HSL (use Chrome) up and down percentage points as seen below.
+// gray-800 #2d3748; hsl(218, 23%, 23%) -- via Tailwind
+// gray-830 #262f40; hsl(220, 26%, 20%)
+// gray-870 #202837; hsl(220, 26%, 17%)
+// gray-900 #1a202c; hsl(220, 26%, 14%) -- via Tailwind
+// gray-930 #131720; hsl(220, 26%, 10%)
+// gray-970 #0b0e13; hsl(220, 26%, 6%)
+
+// Default colors
+.demoapp-widget {
+  --color-primary: #17bf63; // rgb(23, 191, 99, 1)
+  --color-primary-outline: rgba(23, 191, 99, 0.5);
+  --color-primary-faint: rgba(23, 191, 99, 0.1);
+  --color-primary-light: #61f392;
+  --color-primary-dark: #008d36;
+  --color-primary-hover: var(--color-primary-dark);
+  --text-on-color-primary: #fff; // Color for text on primary btn and bg
+
+  // Light is default
+  --bg-bright: #fff; // bg-white
+  --bg-gray: #f7fafc; // gray-100
+  --bg-grayer: #edf2f7; // gray-200
+  --bg-grayest: #e2e8f0; // gray-300
+  --border-gray: #edf2f7; // gray-200
+  --border-grayer: #e2e8f0; // gray-300
+  --text-bright: #1a202c; // gray-900
+  --text-color: #4a5568; // gray-700
+  --text-muted: #718096; // gray-600 -- Same for light/dark
+  --text-faint: #a0aec0; // gray-500
+  --shadow-color-a: rgba(0, 0, 0, 0.1);
+  --shadow-color-b: rgba(0, 0, 0, 0.06);
+  --bg-error: #fff5f5; // red-100
+  --bg-warning: #ffffe5; // yellow-100, adjusted HSL's L down to 95%
+  --bg-info: #ebf8ff; // blue-100
+  --bg-success: #f0fff4; // green-100
+  --text-error: #e53e3e; // red-600
+  --text-warning: #b7791f; // yellow-700
+  --text-info: #3182ce; // blue-600
+  --text-success: #38a169; // green-600
+
+  // Dark if preferred at OS level by user
+  @media (prefers-color-scheme: dark) {
+    --color-primary-hover: var(--color-primary-light);
+    --bg-bright: #1a202c; // gray-900
+    --bg-gray: #131720; // bg-gray-930
+    --bg-grayer: #0b0e13; // bg-gray-970
+    --bg-grayest: #000; // bg-black
+    --border-gray: #202837; // gray-870
+    --border-grayer: #262f40; // gray-830
+    --text-bright: #edf2f7; // gray-200
+    --text-color: #a0aec0; // gray-500
+    // --text-muted: #718096; // gray-600
+    --text-faint: #4a5568; // gray-700
+    --shadow-color-a: rgba(0, 0, 0, 0.2);
+    --shadow-color-b: rgba(0, 0, 0, 0.12);
+    --bg-error: #311212; // red-900, adjusted HSL's L to 13%
+    --bg-warning: #361f07; // yellow-900, adjusted HSL's L to 12%
+    --bg-info: #172436; // blue-900, adjusted HSL's L to 15%
+    --bg-success: #132f22; // green-900, adjusted HSL's L to 13%
+    --text-error: #f56565; // red-500
+    --text-warning: #ecc94b; // yellow-500
+    --text-info: #63b3ed; // blue-400
+    --text-success: #68d391; // green-400
+  }
+}
