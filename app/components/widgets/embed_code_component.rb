@@ -2,11 +2,10 @@
 
 module Widgets
   class EmbedCodeComponent < ApplicationComponent
-    attr_reader :item, :opts
+    attr_reader :item
 
-    def initialize(item:, opts: {})
+    def initialize(item:)
       @item = item
-      @opts = opts
     end
   end
 end

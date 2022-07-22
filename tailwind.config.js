@@ -12,11 +12,11 @@ module.exports = {
     extend: {
       colors: {
         primary: 'var(--color-primary)'
-      },
-    },
+      }
+    }
   },
   variants: {},
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
   corePlugins: {
     // Disabled here and added with scope in _container.scss
     container: false,

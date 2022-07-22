@@ -28,10 +28,9 @@ module Widgets
 
     # TODO: replace with DB call + local seeds
     def item
-      {
-        name:        'My Totally Awesome Item 👋',
-        description: 'This is as good as it gets'
-      }.with_indifferent_access
+      Struct.new(:title, :description)
+            .new('Work With Us ',
+                 'Our Process 👋')
     end
   end
 end
