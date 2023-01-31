@@ -39,7 +39,7 @@ jobs:
 
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           push: true
           secrets: "rails_master_key=${{ secrets.RAILS_MASTER_KEY }}"
